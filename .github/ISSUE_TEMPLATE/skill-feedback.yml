@@ -23,8 +23,6 @@ body:
         - design-scope-negotiator
         - experiment-design
         - data-interpretation
-    validations:
-      required: true
   - type: dropdown
     id: tool
     attributes:
@@ -35,8 +33,6 @@ body:
         - ChatGPT
         - Gemini
         - Other
-    validations:
-      required: true
   - type: textarea
     id: task
     attributes:
@@ -53,8 +49,6 @@ body:
         - Yes, after small edits
         - Partly
         - No
-    validations:
-      required: true
   - type: textarea
     id: missing
     attributes:
