@@ -31,7 +31,7 @@ Each skill lives in `skills/<name>/SKILL.md`: a `name` and `description` (when t
 Install all skills in Claude Code at once:
 
 ```bash
-git clone https://github.com/thanh-lea/ai-skills-library-product-design.git
+git clone https://github.com/designedbythanh/ai-skills-library-product-design.git
 cp -r ai-skills-library-product-design/skills/* ~/.claude/skills/
 ```
 
