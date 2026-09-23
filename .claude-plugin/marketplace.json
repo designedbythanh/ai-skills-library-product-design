@@ -1,0 +1,16 @@
+{
+  "name": "designedbythanh",
+  "description": "AI skills for product designers and product managers, by Thanh Nguyen.",
+  "owner": {
+    "name": "Thanh Nguyen",
+    "url": "https://github.com/designedbythanh"
+  },
+  "plugins": [
+    {
+      "name": "product-design-skills",
+      "source": "./",
+      "description": "15 structured AI skills for product & design teams, from Discovery to Shipping.",
+      "version": "1.0.0"
+    }
+  ]
+}

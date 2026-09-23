@@ -20,20 +20,29 @@ Each skill lives in `skills/<name>/SKILL.md`: a `name` and `description` (when t
 
 | Tool | Setup |
 |---|---|
-| **Claude** (claude.ai / Desktop) | Settings → Capabilities (or Skills) → New skill. Paste Name + Description into their fields, the instructions into the body. Or zip a skill folder and upload it. Claude reaches for it on its own once it recognizes the situation. |
-| **Claude Code** | Copy a skill folder into `~/.claude/skills/` (all projects) or `.claude/skills/` (one project). |
+| **Claude** (claude.ai / Desktop) | Download a skill's `.zip` from the [latest release](https://github.com/designedbythanh/ai-skills-library-product-design/releases/latest) (no GitHub account needed), then upload it in Settings → Capabilities (or Skills). Or create a new skill and paste Name, Description and the instructions by hand. Claude reaches for it on its own once it recognizes the situation. |
+| **Claude Code** | Install all 15 as a plugin (commands below), or copy a skill folder into `~/.claude/skills/` (all projects) or `.claude/skills/` (one project). |
 | **ChatGPT** | Create a Custom GPT (Explore GPTs → Create) or add it to a Project's custom instructions. You open that GPT/Project yourself when you want it; it doesn't auto-trigger mid-chat. |
 | **Gemini** | Create a Gem (Gemini → Gems → New Gem). Paste the instructions in, then open that Gem when you need it. |
 | **Any other tool** | Paste the instructions straight into a new chat, followed by your specific details. Works everywhere; you just re-paste each time. |
 
 > 💡 One real difference worth knowing before you commit to a tool: Claude's Skills can notice mid-conversation that one applies and use it without you asking. ChatGPT and Gemini need you to manually open the right GPT/Gem first.
 
-Install all skills in Claude Code at once:
+Install all skills in Claude Code as a plugin:
+
+```
+/plugin marketplace add designedbythanh/ai-skills-library-product-design
+/plugin install product-design-skills@designedbythanh
+```
+
+Or copy them in by hand:
 
 ```bash
 git clone https://github.com/designedbythanh/ai-skills-library-product-design.git
 cp -r ai-skills-library-product-design/skills/* ~/.claude/skills/
 ```
+
+Used a skill on real work? [Tell us how it went](https://github.com/designedbythanh/ai-skills-library-product-design/issues/new?template=skill-feedback.yml).
 
 ## The 15 skills
 

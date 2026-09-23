@@ -1,0 +1,13 @@
+{
+  "name": "product-design-skills",
+  "version": "1.0.0",
+  "description": "15 structured AI skills for product & design teams, from Discovery to Shipping.",
+  "author": {
+    "name": "Thanh Nguyen",
+    "url": "https://github.com/designedbythanh"
+  },
+  "homepage": "https://github.com/designedbythanh/ai-skills-library-product-design",
+  "repository": "https://github.com/designedbythanh/ai-skills-library-product-design",
+  "license": "CC-BY-4.0",
+  "keywords": ["product-design", "ux", "product-management", "skills"]
+}
