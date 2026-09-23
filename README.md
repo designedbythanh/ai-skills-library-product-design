@@ -110,6 +110,8 @@ The categories are useful for browsing by type of work, but two skills sit at a 
 - [`experiment-design`](skills/experiment-design/SKILL.md)
 - [`data-interpretation`](skills/data-interpretation/SKILL.md)
 
+In testing, Claude often suggested the next skill in this order on its own, e.g. offering `acceptance-criteria` after a `prd-first-draft`.
+
 ## License
 
 [CC BY 4.0](LICENSE). Use, adapt, and share freely, including commercially, with attribution.
