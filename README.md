@@ -16,7 +16,7 @@ by [Thanh Nguyen](https://www.linkedin.com/in/thanh2-nguyen/) · Product Designe
 
 ## How to use it
 
-Each skill lives in `skills/<name>/SKILL.md`: a `name` and `description` (when to use it) in the header, and the instructions below it. Next to it, `EXAMPLE.md` shows a real, unedited run in Claude Code on a fictional scenario. Where you put it depends on your tool.
+Each skill lives in `skills/<name>/SKILL.md`: a `name` and `description` (when to use it) in the header, and the instructions below it. Next to it, `EXAMPLE.md` shows a real run in Claude Code on a fictional scenario. Where you put it depends on your tool.
 
 | Tool | Setup |
 |---|---|

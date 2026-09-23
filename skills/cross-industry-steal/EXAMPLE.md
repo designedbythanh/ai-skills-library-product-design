@@ -1,6 +1,6 @@
 # Example: cross-industry-steal
 
-> Real output from Claude Code (Claude Opus 5.5), run on 2026-09-23 with this skill installed. The output is unedited. The scenario is fictional.
+> Real output from Claude Code (Claude Opus 5.5), run on 2026-09-23 with this skill installed. The output is unedited, except for a closing offer to do more work, which was removed. The scenario is fictional.
 > The prompt doesn't name the skill: Claude recognized the situation and used it on its own.
 
 ## Prompt
@@ -43,5 +43,3 @@ EMA gets at the actual cause. Receipts get lost and categories go wrong because 
 5. **Metric to watch:** Median time from transaction to receipt capture. If it drops from about 20 days to under an hour, lost receipts and wrong categories should fall with it.
 
 **Constraint:** This works best with corporate cards, where you get the transaction feed. For out-of-pocket spending on personal cards there's no swipe event, so you'd need weaker triggers, such as a daily "anything to log today?" nudge on travel days taken from the calendar. Location-based triggers would work too, but they raise real privacy concerns and should be opt-in only.
-
-If you want to take this further, I can pressure-test the flow with the `edge-case-finder` skill (declined transactions, split bills, foreign currency) or write acceptance criteria for the notification flow.

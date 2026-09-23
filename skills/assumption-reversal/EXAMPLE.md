@@ -1,6 +1,6 @@
 # Example: assumption-reversal
 
-> Real output from Claude Code (Claude Opus 5.5), run on 2026-09-23 with this skill installed. The output is unedited. The scenario is fictional.
+> Real output from Claude Code (Claude Opus 5.5), run on 2026-09-23 with this skill installed. The output is unedited, except for a closing offer to do more work, which was removed. The scenario is fictional.
 > The prompt doesn't name the skill: Claude recognized the situation and used it on its own.
 
 ## Prompt
@@ -46,5 +46,3 @@ Here's each assumption flipped all the way around. Don't worry yet about whether
 ---
 
 **What the three reversals have in common:** they all stop treating checkout as the end of a shopping list and start treating it as the moment the user *decides* something: which meals, which time, which trade-offs. Before you pick a direction, it's worth checking which of the original three assumptions your own data actually supports. For example, look at how often slot unavailability at checkout causes people to drop off. That will show which reversal is worth prototyping.
-
-Next, I can run **cross-industry-steal** on the strongest idea (airline seat selection looks like a close structural match to "slot first") or **persona-pretest** to see how a rushed weeknight shopper and a Sunday meal planner would each react to these ideas.

@@ -1,6 +1,6 @@
 # Example: user-interview-synthesis
 
-> Real output from Claude Code (Claude Opus 5.5), run on 2026-09-23 with this skill installed. The output is unedited. The scenario is fictional.
+> Real output from Claude Code (Claude Opus 5.5), run on 2026-09-23 with this skill installed. The output is unedited, except for a closing offer to do more work, which was removed. The scenario is fictional.
 > The prompt doesn't name the skill: Claude recognized the situation and used it on its own.
 
 ## Prompt
@@ -83,5 +83,3 @@ User 5 (sales rep): Same as user 1, end of month. Says "honestly it's fine, it's
 - Talk to finance/payroll to learn how reimbursements get paid out (payroll cycle vs. on demand). This decides whether faster submission actually speeds up payment.
 
 **Main bet to discuss with the team:** move the product from "fill in a form at month-end" to "log each expense the moment it happens, with the app filling in category and currency." It targets insights 1–4 together.
-
-I can turn this into a shareable doc, or run `/prd-first-draft` on the "log it now" direction.

@@ -1,6 +1,6 @@
 # Example: acceptance-criteria
 
-> Real output from Claude Code (Claude Opus 5.5), run on 2026-09-23 with this skill installed. The output is unedited. The scenario is fictional.
+> Real output from Claude Code (Claude Opus 5.5), run on 2026-09-23 with this skill installed. The output is unedited, except for a closing offer to do more work, which was removed. The scenario is fictional.
 > The prompt doesn't name the skill: Claude recognized the situation and used it on its own.
 
 ## Prompt
@@ -207,5 +207,3 @@ Then the numbering follows the account's existing yearly reset rule, the same wa
 3. **Stop.** Should it be permanent (as assumed here), or just a pause with no resume date?
 4. **Review before sending.** Some freelancers bill variable hours and will want to check each invoice before it goes out. If that's common among your users, this story as written won't help them, and a draft-first option is the missing piece.
 5. **Sequential numbering.** Check EC2, EC3 and E6 with whoever owns compliance. Most real bugs with the French numbering rule come from invoices created at the same moment and from failed generations.
-
-I kept this in chat. I can put it in a shareable doc or a Notion page if that's easier for the team.

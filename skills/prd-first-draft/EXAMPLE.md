@@ -1,6 +1,6 @@
 # Example: prd-first-draft
 
-> Real output from Claude Code (Claude Opus 5.5), run on 2026-09-23 with this skill installed. The output is unedited. The scenario is fictional.
+> Real output from Claude Code (Claude Opus 5.5), run on 2026-09-23 with this skill installed. The output is unedited, except for a closing offer to do more work, which was removed. The scenario is fictional.
 > The prompt doesn't name the skill: Claude recognized the situation and used it on its own.
 
 ## Prompt
@@ -112,5 +112,3 @@ About 30% of active accounts have at least one monthly retainer client. Each mon
 ---
 
 **Guessed or placeholder (please confirm):** all numeric targets, the baselines for late and on-time invoices, the default send mode, the payment reminders feature, the dashboard, whether 6 weeks is enough, and the French legal details beyond sequential numbering.
-
-I can also turn this into a shared doc your team can comment on, or run `/edge-case-finder` or `/acceptance-criteria` on the requirements next.

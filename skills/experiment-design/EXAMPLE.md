@@ -1,6 +1,6 @@
 # Example: experiment-design
 
-> Real output from Claude Code (Claude Opus 5.5), run on 2026-09-23 with this skill installed. The output is unedited. The scenario is fictional.
+> Real output from Claude Code (Claude Opus 5.5), run on 2026-09-23 with this skill installed. The output is unedited, except for a closing offer to do more work, which was removed. The scenario is fictional.
 > The prompt doesn't name the skill: Claude recognized the situation and used it on its own.
 
 ## Prompt
@@ -76,5 +76,3 @@ Eligible traffic is about 1,200 × 70% = **~840 users a week**, or ~420 per grou
 - **Ship if** the primary metric rises by ≥4 pp at 95% confidence (or the lower bound of the confidence interval is > 0 and the point estimate is ≥ ~3 pp), and no counter-metric drops significantly.
 - **Roll back if** the primary metric is significantly lower, any guardrail drops significantly (especially errors, re-sends or load time), or SRM shows up and can't be explained.
 - **Iterate if** the result is flat or inconclusive (CI includes 0) but the leading indicator improves. That suggests the preview helps within a session but something else, like client details or payment setup, is blocking the send. Look at where users drop off in the funnel and test that. If the result is flat and there are no guardrail problems, you can still ship it for UX reasons, but don't claim it moved activation.
-
-I can turn this into a pre-registration doc or a Notion page.
