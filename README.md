@@ -39,8 +39,12 @@ Or copy them in by hand:
 
 ```bash
 git clone https://github.com/designedbythanh/ai-skills-library-product-design.git
-cp -r ai-skills-library-product-design/skills/* ~/.claude/skills/
+cp -r ai-skills-library-product-design/skills/* "${CLAUDE_CONFIG_DIR:-$HOME/.claude}/skills/"
 ```
+
+If you run Claude Code with a custom `CLAUDE_CONFIG_DIR`, skills live in `$CLAUDE_CONFIG_DIR/skills/`, not `~/.claude/skills/`. The command above handles both; the plugin install doesn't depend on the path at all.
+
+**Already have some of these skills?** If you added them earlier (uploaded to claude.ai, pasted from the Notion template, or copied in by hand), remove the old copies before installing. Otherwise you end up with two near-identical versions of the same skill and Claude picks one unpredictably. Skills uploaded to claude.ai sync into Claude Code too, so check Settings → Capabilities as well as your skills folder.
 
 Used a skill on real work? [Tell us how it went](https://github.com/designedbythanh/ai-skills-library-product-design/issues/new?template=skill-feedback.yml).
 
