@@ -1,130 +1,96 @@
 # AI Skills Library for Product & Design Teams
 
-15 structured AI skills covering the full product cycle, from Discovery to Shipping. Paste once, and your AI tool runs them on its own. No terminal, no code editor, no setup beyond copy-paste.
+15 AI skills for product designers and product managers, from understanding a problem to reading the results after launch. Each skill is a short set of instructions your AI tool follows for one job: critiquing a design, finding edge cases, writing acceptance criteria. They ask for the context they need instead of guessing, and each one comes with a real, unedited run you can read before trying it.
 
-Most people rewrite the same AI prompt every sprint: copy it from a doc, fill in the blanks, hope it remembers what "good" looks like this time. These aren't prompts to paste and edit by hand. They're **Skills**: instructions your AI tool keeps and reaches for on its own once it recognizes the situation.
+by [Thanh Nguyen](https://www.linkedin.com/in/thanh2-nguyen/) · Product Designer, AI-native workflows · [Substack](https://designedbythanh.substack.com) · [Notion templates](https://www.notion.com/@thanh-nguyen)
 
-Every skill has:
-- a stated **trigger** (when to use it)
-- instructions that tell your AI tool **what to ask for before starting**, so it never guesses at missing context
-- a defined **output format**
-- one hard rule (**Exigence**) that keeps the output from turning into generic AI filler
+## What using one looks like
 
-**Who it's for:** product designers, UX/UI designers, product managers, and design engineers who already use AI daily and want structured, repeatable output instead of re-explaining context every time.
+You describe a design and ask for feedback. In Claude you don't need to name the skill: Claude notices that `design-critique-facilitator` fits and uses it. Before critiquing, it asks what's already decided, what's still open, and what worries you. Then it answers your worries first. One finding from the [example run](skills/design-critique-facilitator/EXAMPLE.md), a receptionist screen in a clinic app:
 
-by [Thanh Nguyen](https://www.linkedin.com/in/thanh2-nguyen/) · Product Designer, AI-native workflows · [Notion templates](https://www.notion.com/@thanh-nguyen) · [Substack](https://designedbythanh.substack.com)
+> **Your open question: group late patients, or keep time order?** I recommend keeping time order and not moving late patients into their own group. Late status is set automatically, so a separate group would make a row jump to another place at +10 minutes, possibly just as the receptionist goes to click it. That's the "lost my place" problem you're worried about.
 
-## How to use it
+Every skill has an example like this next to it, run in Claude Code on a fictional case.
 
-Each skill lives in `skills/<name>/SKILL.md`: a `name` and `description` (when to use it) in the header, and the instructions below it. Next to it, `EXAMPLE.md` shows a real run in Claude Code on a fictional scenario. Where you put it depends on your tool.
+## Does it work?
 
-| Tool | Setup |
+I tested `design-critique-facilitator` against a redesign I had already made on a real product, rebuilt as a fictional case. The current version found 9 of the 11 problems the real redesign fixed, asked for my intent before critiquing, and pushed back on one of my own decisions. It also praised two things it shouldn't have. The full test, with what it still gets wrong and the limits of the test, is in [EVAL.md](skills/design-critique-facilitator/EVAL.md).
+
+So far this is the only skill tested this way. The other 14 have their example runs, not a scored test.
+
+## The 15 skills, in the order you'd use them
+
+| Stage | Skill | What it does | |
+|---|---|---|---|
+| **Understand the problem** | [`five-whys-root-cause`](skills/five-whys-root-cause/SKILL.md) | Finds the real need behind a feature request, then other ways to meet it | [Example](skills/five-whys-root-cause/EXAMPLE.md) |
+| | [`user-interview-synthesis`](skills/user-interview-synthesis/SKILL.md) | Turns raw notes from several interviews into ranked insights and unspoken needs | [Example](skills/user-interview-synthesis/EXAMPLE.md) |
+| | [`persona-pretest`](skills/persona-pretest/SKILL.md) | Walks through a design as a specific user, to find confusion and drop-off before real testing | [Example](skills/persona-pretest/EXAMPLE.md) |
+| **Find directions** | [`assumption-reversal`](skills/assumption-reversal/SKILL.md) | Flips the design's assumptions and turns the reversed view into concrete ideas | [Example](skills/assumption-reversal/EXAMPLE.md) |
+| | [`cross-industry-steal`](skills/cross-industry-steal/SKILL.md) | Finds how 3 unrelated industries solve the same kind of problem, and adapts the best one | [Example](skills/cross-industry-steal/EXAMPLE.md) |
+| **Choose a direction** | [`decision-rationale`](skills/decision-rationale/SKILL.md) | Compares two options on explicit criteria and scenarios, and writes down a recommendation with a confidence level | [Example](skills/decision-rationale/EXAMPLE.md) |
+| **Spec it** | [`prd-first-draft`](skills/prd-first-draft/SKILL.md) | Writes a first PRD engineers can build from and executives can read in 5 minutes | [Example](skills/prd-first-draft/EXAMPLE.md) |
+| | [`success-metrics-definition`](skills/success-metrics-definition/SKILL.md) | Defines how you'll know the feature worked: a main metric, early signals, and counter-metrics | [Example](skills/success-metrics-definition/EXAMPLE.md) |
+| | [`edge-case-finder`](skills/edge-case-finder/SKILL.md) | Lists what breaks: bad input, permissions, two people at once, outages, and how users actually behave | [Example](skills/edge-case-finder/EXAMPLE.md) |
+| | [`acceptance-criteria`](skills/acceptance-criteria/SKILL.md) | Turns a user story into Given/When/Then criteria, including errors and edge cases | [Example](skills/acceptance-criteria/EXAMPLE.md) |
+| **Get feedback** | [`design-critique-facilitator`](skills/design-critique-facilitator/SKILL.md) | Critiques a design against your intent, with each fix tagged by severity and owner | [Example](skills/design-critique-facilitator/EXAMPLE.md) · [Eval](skills/design-critique-facilitator/EVAL.md) |
+| | [`explain-to-4-audiences`](skills/explain-to-4-audiences/SKILL.md) | Explains one decision to a 10-year-old, an engineer, an executive and a user, to test whether it's clear | [Example](skills/explain-to-4-audiences/EXAMPLE.md) |
+| **Under deadline pressure** | [`design-scope-negotiator`](skills/design-scope-negotiator/SKILL.md) | Sorts scope into ship, fast-follow and cut, with the reason for each | [Example](skills/design-scope-negotiator/EXAMPLE.md) |
+| **After it ships** | [`experiment-design`](skills/experiment-design/SKILL.md) | Plans an A/B test with a decision rule, and says when traffic is too low to trust the result | [Example](skills/experiment-design/EXAMPLE.md) |
+| | [`data-interpretation`](skills/data-interpretation/SKILL.md) | Separates what the numbers show from the explanation, and rules out other causes before acting | [Example](skills/data-interpretation/EXAMPLE.md) |
+
+Two skills sit later than you might expect. `success-metrics-definition` belongs right after the spec, not at the end, and `design-scope-negotiator` comes in under deadline pressure, not right after ideas. In testing, Claude often suggested the next skill in this order on its own, for example offering `acceptance-criteria` after a `prd-first-draft`.
+
+## How each skill is built
+
+Each skill is one `SKILL.md` file with four parts:
+- **When to use it**, so your AI tool knows when to reach for it.
+- **What to ask before starting.** If the context is missing, it asks instead of guessing.
+- **The output format**, so results look the same every time.
+- **One hard rule** the output must follow, so it doesn't drift into generic filler. In the files it's called *Exigence*, French for "requirement". For example, `edge-case-finder` must cover all five kinds of failure every time, and say so when one has nothing to report.
+
+## Install
+
+| Tool | How |
 |---|---|
-| **Claude** (claude.ai / Desktop) | Download a skill's `.zip` from the [latest release](https://github.com/designedbythanh/ai-skills-library-product-design/releases/latest) (no GitHub account needed), then upload it in Settings → Capabilities (or Skills). Or create a new skill and paste Name, Description and the instructions by hand. Claude reaches for it on its own once it recognizes the situation. |
-| **Claude Code** | Install all 15 as a plugin (commands below), or copy a skill folder into `~/.claude/skills/` (all projects) or `.claude/skills/` (one project). |
-| **ChatGPT** | Create a Custom GPT (Explore GPTs → Create) or add it to a Project's custom instructions. You open that GPT/Project yourself when you want it; it doesn't auto-trigger mid-chat. |
-| **Gemini** | Create a Gem (Gemini → Gems → New Gem). Paste the instructions in, then open that Gem when you need it. |
-| **Any other tool** | Paste the instructions straight into a new chat, followed by your specific details. Works everywhere; you just re-paste each time. |
+| **Claude** (claude.ai / Desktop) | Download a skill's `.zip` from the [latest release](https://github.com/designedbythanh/ai-skills-library-product-design/releases/latest) (no GitHub account needed) and upload it in Settings → Capabilities (or Skills). Or create a new skill there and paste the name, description and instructions by hand. Claude uses it on its own when it fits. |
+| **Claude Code** | Install all 15 as a plugin (below), or copy skill folders by hand. |
+| **ChatGPT** | Paste a skill's instructions into a Custom GPT (Explore GPTs → Create) or a Project's instructions. You open that GPT or Project yourself when you need it. |
+| **Gemini** | Paste a skill's instructions into a Gem (Gems → New Gem), then open that Gem when you need it. |
+| **Any other tool** | Paste the instructions into a new chat, followed by your details. |
 
-> 💡 One real difference worth knowing before you commit to a tool: Claude's Skills can notice mid-conversation that one applies and use it without you asking. ChatGPT and Gemini need you to manually open the right GPT/Gem first.
+Claude is the only one that picks the right skill mid-conversation on its own. In ChatGPT and Gemini, you choose the GPT or Gem first.
 
-Install all skills in Claude Code as a plugin:
+Claude Code plugin:
 
 ```
 /plugin marketplace add designedbythanh/ai-skills-library-product-design
 /plugin install product-design-skills@designedbythanh
 ```
 
-Or copy them in by hand:
+<details>
+<summary><strong>Copy by hand, custom config folder, and duplicate installs</strong></summary>
+
+Copy all skills into Claude Code by hand:
 
 ```bash
 git clone https://github.com/designedbythanh/ai-skills-library-product-design.git
 cp -r ai-skills-library-product-design/skills/* "${CLAUDE_CONFIG_DIR:-$HOME/.claude}/skills/"
 ```
 
-If you run Claude Code with a custom `CLAUDE_CONFIG_DIR`, skills live in `$CLAUDE_CONFIG_DIR/skills/`, not `~/.claude/skills/`. The command above handles both; the plugin install doesn't depend on the path at all.
+To use a skill in one project only, copy its folder into that project's `.claude/skills/` instead.
 
-**Already have some of these skills?** If you added them earlier (uploaded to claude.ai, pasted from the Notion template, or copied in by hand), remove the old copies before installing. Otherwise you end up with two near-identical versions of the same skill and Claude picks one unpredictably. Skills uploaded to claude.ai sync into Claude Code too, so check Settings → Capabilities as well as your skills folder.
+If you run Claude Code with a custom `CLAUDE_CONFIG_DIR`, skills live in `$CLAUDE_CONFIG_DIR/skills/`, not `~/.claude/skills/`. The command above handles both. The plugin install doesn't depend on the path at all.
 
-Used a skill on real work? [Tell us how it went](https://github.com/designedbythanh/ai-skills-library-product-design/issues/new?template=skill-feedback.yml).
+**Already have some of these skills?** If you added them earlier (uploaded to claude.ai, pasted from the Notion template, or copied in by hand), remove the old copies before installing. Otherwise you end up with two near-identical versions of the same skill, and Claude picks one unpredictably. Skills uploaded to claude.ai sync into Claude Code too, so check Settings → Capabilities as well as your skills folder.
 
-## The 15 skills
+**Updating:** see the [changelog](CHANGELOG.md) and the notes on each [release](https://github.com/designedbythanh/ai-skills-library-product-design/releases).
 
-### Discovery & Research
+</details>
 
-| Skill | When to use | Example |
-|---|---|---|
-| [`five-whys-root-cause`](skills/five-whys-root-cause/SKILL.md) | Dig past a stakeholder's feature request to the real underlying need, using 5 consecutive Why questions, then surface alternative solutions. Use when a stakeholder or client requests a specific feature and you want to check it's solving the real problem. | [See output](skills/five-whys-root-cause/EXAMPLE.md) |
-| [`user-interview-synthesis`](skills/user-interview-synthesis/SKILL.md) | Turn messy interview notes from multiple users into ranked insights, frustrations, and unspoken needs. Use after collecting raw notes from user interviews. | [See output](skills/user-interview-synthesis/EXAMPLE.md) |
-| [`persona-pretest`](skills/persona-pretest/SKILL.md) | Simulate how a specific user persona would react to a design or flow, surfacing likely confusion, objections, and drop-off points before real user testing. Use when you want a fast sanity check on a design before investing in a usability study. | [See output](skills/persona-pretest/EXAMPLE.md) |
+## Feedback
 
-### Ideation
-
-| Skill | When to use | Example |
-|---|---|---|
-| [`assumption-reversal`](skills/assumption-reversal/SKILL.md) | Flip your current design assumptions 180° and generate concrete ideas from the reversed perspective. Use when stuck on ideas or wanting to pressure-test the current design direction. | [See output](skills/assumption-reversal/EXAMPLE.md) |
-| [`cross-industry-steal`](skills/cross-industry-steal/SKILL.md) | Find 3 solutions from unrelated industries that solve a structurally similar problem, and translate the strongest one into a concrete idea. Use when stuck on ideas or need fresh inspiration outside the category. | [See output](skills/cross-industry-steal/EXAMPLE.md) |
-
-### Prioritization
-
-| Skill | When to use | Example |
-|---|---|---|
-| [`decision-rationale`](skills/decision-rationale/SKILL.md) | Document a design decision between 2 options with explicit criteria, scenario testing, and a confidence-rated recommendation. Use when torn between two directions and need a defensible, written rationale - not just a gut call. | [See output](skills/decision-rationale/EXAMPLE.md) |
-| [`design-scope-negotiator`](skills/design-scope-negotiator/SKILL.md) | Sort a design scope into Ship / Fast-follow / Cut buckets using effort vs. impact-if-removed, with opinionated reasoning for each. Use when pushing back on scope creep or negotiating what gets cut before a deadline. | [See output](skills/design-scope-negotiator/EXAMPLE.md) |
-
-### Execution & Spec Writing
-
-| Skill | When to use | Example |
-|---|---|---|
-| [`prd-first-draft`](skills/prd-first-draft/SKILL.md) | Write a PRD first draft that's clear enough for engineers to build from and concise enough for executives to read in 5 minutes. Use when starting to spec a feature or product. | [See output](skills/prd-first-draft/EXAMPLE.md) |
-| [`edge-case-finder`](skills/edge-case-finder/SKILL.md) | Stress-test a feature across 5 failure dimensions (input, permissions, concurrency, dependencies, user behavior) before it ships. Use before handing a spec to engineering, to catch what breaks. | [See output](skills/edge-case-finder/EXAMPLE.md) |
-| [`acceptance-criteria`](skills/acceptance-criteria/SKILL.md) | Turn a user story into airtight Given/When/Then acceptance criteria covering happy path, errors, and edge cases. Use to define "done" before engineering starts building. | [See output](skills/acceptance-criteria/EXAMPLE.md) |
-
-### Communication
-
-| Skill | When to use | Example |
-|---|---|---|
-| [`design-critique-facilitator`](skills/design-critique-facilitator/SKILL.md) | Facilitate a structured design critique across 5 lenses (clarity, hierarchy, consistency, interaction & feedback, edge cases), starting from the designer's intent and concerns, and tagging each fix by severity and owner. Use when presenting work for feedback, to get specific critique instead of vague opinions. | [See output](skills/design-critique-facilitator/EXAMPLE.md) · [Eval](skills/design-critique-facilitator/EVAL.md) |
-| [`explain-to-4-audiences`](skills/explain-to-4-audiences/SKILL.md) | Translate one design decision into 4 audience-specific explanations (10-year-old, engineering, executive, end user) to pressure-test whether it's actually clear. Use after designing, before presenting, writing docs, or shipping. | [See output](skills/explain-to-4-audiences/EXAMPLE.md) |
-
-### Analysis & Metrics
-
-| Skill | When to use | Example |
-|---|---|---|
-| [`success-metrics-definition`](skills/success-metrics-definition/SKILL.md) | Design a metrics framework (primary metric, leading/lagging indicators, counter-metrics) that proves a feature solved the real problem, not just that it was used. Use when defining what success looks like before building. | [See output](skills/success-metrics-definition/EXAMPLE.md) |
-| [`experiment-design`](skills/experiment-design/SKILL.md) | Design a full, statistically-honest experiment plan - hypothesis, control/variant, duration, decision rule - and flag if traffic is too low for a reliable result. Use when planning an A/B test or any product experiment. | [See output](skills/experiment-design/EXAMPLE.md) |
-| [`data-interpretation`](skills/data-interpretation/SKILL.md) | Interpret metrics or experiment results by separating fact from explanation and ruling out alternative causes before recommending action. Use when reviewing results and need to draw a real conclusion, not just eyeball a chart. | [See output](skills/data-interpretation/EXAMPLE.md) |
-
-## Recommended order
-
-The categories are useful for browsing by type of work, but two skills sit at a different point in a real product timeline than their category suggests: `success-metrics-definition` belongs right after spec'ing, not at the end, and `design-scope-negotiator` fires under deadline pressure during execution, not right after ideation. To run the library end-to-end on a real feature, follow this order:
-
-
-**1. Understand the problem**
-- [`five-whys-root-cause`](skills/five-whys-root-cause/SKILL.md)
-- [`user-interview-synthesis`](skills/user-interview-synthesis/SKILL.md)
-- [`persona-pretest`](skills/persona-pretest/SKILL.md)
-**2. Find directions**
-- [`assumption-reversal`](skills/assumption-reversal/SKILL.md)
-- [`cross-industry-steal`](skills/cross-industry-steal/SKILL.md)
-**3. Choose a direction**
-- [`decision-rationale`](skills/decision-rationale/SKILL.md)
-**4. Spec it, define success alongside it**
-- [`prd-first-draft`](skills/prd-first-draft/SKILL.md)
-- [`success-metrics-definition`](skills/success-metrics-definition/SKILL.md)
-- [`edge-case-finder`](skills/edge-case-finder/SKILL.md)
-- [`acceptance-criteria`](skills/acceptance-criteria/SKILL.md)
-**5. Get feedback before shipping**
-- [`design-critique-facilitator`](skills/design-critique-facilitator/SKILL.md)
-- [`explain-to-4-audiences`](skills/explain-to-4-audiences/SKILL.md)
-**6. Under deadline pressure**
-- [`design-scope-negotiator`](skills/design-scope-negotiator/SKILL.md)
-**7. After it ships**
-- [`experiment-design`](skills/experiment-design/SKILL.md)
-- [`data-interpretation`](skills/data-interpretation/SKILL.md)
-
-In testing, Claude often suggested the next skill in this order on its own, e.g. offering `acceptance-criteria` after a `prd-first-draft`.
+Used a skill on real work? [Tell me how it went](https://github.com/designedbythanh/ai-skills-library-product-design/issues/new?template=skill-feedback.yml). What was missing or wrong is the most useful part.
 
 ## License
 
-[CC BY 4.0](LICENSE). Use, adapt, and share freely, including commercially, with attribution.
+[CC BY 4.0](LICENSE). Use, adapt and share freely, including commercially, with attribution.
