@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Scored runs for [`edge-case-finder`](skills/edge-case-finder/EVAL.md) and [`persona-pretest`](skills/persona-pretest/EVAL.md), from the same test session as the design-critique-facilitator eval.
+- CI checks skills, manifests and links on every push.
+
 ## 1.1.0 · 2026-09-27
 
 ### design-critique-facilitator

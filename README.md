@@ -16,7 +16,7 @@ Every skill has an example like this next to it, run in Claude Code on a fiction
 
 I tested `design-critique-facilitator` against a redesign I had already made on a real product, rebuilt as a fictional case. The current version found 9 of the 11 problems the real redesign fixed, asked for my intent before critiquing, and pushed back on one of my own decisions. It also praised two things it shouldn't have. The full test, with what it still gets wrong and the limits of the test, is in [EVAL.md](skills/design-critique-facilitator/EVAL.md).
 
-So far this is the only skill tested this way. The other 14 have their example runs, not a scored test.
+In the same session I ran two more skills on that page, and scored them too. [`edge-case-finder`](skills/edge-case-finder/EVAL.md) found four real problems the critique had missed, but 5 of its 13 "fix before launch" items were shortcuts in my prototype. [`persona-pretest`](skills/persona-pretest/EVAL.md) suggested the same top 3 fixes the real redesign made. Those two are single scored runs, not comparisons. The other 12 skills have their example runs, not a scored test.
 
 ## The 15 skills, in the order you'd use them
 
@@ -24,13 +24,13 @@ So far this is the only skill tested this way. The other 14 have their example r
 |---|---|---|---|
 | **Understand the problem** | [`five-whys-root-cause`](skills/five-whys-root-cause/SKILL.md) | Finds the real need behind a feature request, then other ways to meet it | [Example](skills/five-whys-root-cause/EXAMPLE.md) |
 | | [`user-interview-synthesis`](skills/user-interview-synthesis/SKILL.md) | Turns raw notes from several interviews into ranked insights and unspoken needs | [Example](skills/user-interview-synthesis/EXAMPLE.md) |
-| | [`persona-pretest`](skills/persona-pretest/SKILL.md) | Walks through a design as a specific user, to find confusion and drop-off before real testing | [Example](skills/persona-pretest/EXAMPLE.md) |
+| | [`persona-pretest`](skills/persona-pretest/SKILL.md) | Walks through a design as a specific user, to find confusion and drop-off before real testing | [Example](skills/persona-pretest/EXAMPLE.md) · [Eval](skills/persona-pretest/EVAL.md) |
 | **Find directions** | [`assumption-reversal`](skills/assumption-reversal/SKILL.md) | Flips the design's assumptions and turns the reversed view into concrete ideas | [Example](skills/assumption-reversal/EXAMPLE.md) |
 | | [`cross-industry-steal`](skills/cross-industry-steal/SKILL.md) | Finds how 3 unrelated industries solve the same kind of problem, and adapts the best one | [Example](skills/cross-industry-steal/EXAMPLE.md) |
 | **Choose a direction** | [`decision-rationale`](skills/decision-rationale/SKILL.md) | Compares two options on explicit criteria and scenarios, and writes down a recommendation with a confidence level | [Example](skills/decision-rationale/EXAMPLE.md) |
 | **Spec it** | [`prd-first-draft`](skills/prd-first-draft/SKILL.md) | Writes a first PRD engineers can build from and executives can read in 5 minutes | [Example](skills/prd-first-draft/EXAMPLE.md) |
 | | [`success-metrics-definition`](skills/success-metrics-definition/SKILL.md) | Defines how you'll know the feature worked: a main metric, early signals, and counter-metrics | [Example](skills/success-metrics-definition/EXAMPLE.md) |
-| | [`edge-case-finder`](skills/edge-case-finder/SKILL.md) | Lists what breaks: bad input, permissions, two people at once, outages, and how users actually behave | [Example](skills/edge-case-finder/EXAMPLE.md) |
+| | [`edge-case-finder`](skills/edge-case-finder/SKILL.md) | Lists what breaks: bad input, permissions, two people at once, outages, and how users actually behave | [Example](skills/edge-case-finder/EXAMPLE.md) · [Eval](skills/edge-case-finder/EVAL.md) |
 | | [`acceptance-criteria`](skills/acceptance-criteria/SKILL.md) | Turns a user story into Given/When/Then criteria, including errors and edge cases | [Example](skills/acceptance-criteria/EXAMPLE.md) |
 | **Get feedback** | [`design-critique-facilitator`](skills/design-critique-facilitator/SKILL.md) | Critiques a design against your intent, with each fix tagged by severity and owner | [Example](skills/design-critique-facilitator/EXAMPLE.md) · [Eval](skills/design-critique-facilitator/EVAL.md) |
 | | [`explain-to-4-audiences`](skills/explain-to-4-audiences/SKILL.md) | Explains one decision to a 10-year-old, an engineer, an executive and a user, to test whether it's clear | [Example](skills/explain-to-4-audiences/EXAMPLE.md) |
