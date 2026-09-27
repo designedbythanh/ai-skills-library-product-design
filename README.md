@@ -84,7 +84,7 @@ Used a skill on real work? [Tell us how it went](https://github.com/designedbyth
 
 | Skill | When to use | Example |
 |---|---|---|
-| [`design-critique-facilitator`](skills/design-critique-facilitator/SKILL.md) | Facilitate a structured design critique across 4 lenses (clarity, hierarchy, consistency, edge cases), separating what's working from what needs attention. Use when presenting work for feedback, to get specific critique instead of vague opinions. | [See output](skills/design-critique-facilitator/EXAMPLE.md) |
+| [`design-critique-facilitator`](skills/design-critique-facilitator/SKILL.md) | Facilitate a structured design critique across 5 lenses (clarity, hierarchy, consistency, interaction & feedback, edge cases), starting from the designer's intent and concerns, and tagging each fix by severity and owner. Use when presenting work for feedback, to get specific critique instead of vague opinions. | [See output](skills/design-critique-facilitator/EXAMPLE.md) · [Eval](skills/design-critique-facilitator/EVAL.md) |
 | [`explain-to-4-audiences`](skills/explain-to-4-audiences/SKILL.md) | Translate one design decision into 4 audience-specific explanations (10-year-old, engineering, executive, end user) to pressure-test whether it's actually clear. Use after designing, before presenting, writing docs, or shipping. | [See output](skills/explain-to-4-audiences/EXAMPLE.md) |
 
 ### Analysis & Metrics

@@ -1,7 +1,13 @@
 # Example: design-critique-facilitator
 
-> Real output from Claude Code (Claude Opus 5.5), run on 2026-09-23 with this skill installed. The output is unedited. The scenario is fictional.
+> Real output from Claude Code (Claude Opus 5.5), run on 2026-09-26 with the v1.1.0 draft of this skill installed. The output is unedited. The scenario is fictional.
 > The prompt doesn't name the skill: Claude recognized the situation and used it on its own.
+> Same prompt as the [v1.0.0 example](https://github.com/designedbythanh/ai-skills-library-product-design/blob/v1.0.0/skills/design-critique-facilitator/EXAMPLE.md), so the two can be compared ([eval](EVAL.md)). Two accidental pastes (the launch command, and the answers sent a second time) are left out. After this run, the owner tag gained a fourth value, "design + dev".
+
+**What to notice:**
+- The skill asks four questions before critiquing, even though the prompt already gives the goal, the user and the stage. It wants what the prompt can't give: what's decided, what's open, and what worries the designer.
+- It answers the designer's open question (group late patients or keep time order?) with a reason taken from their own answers.
+- It keeps the stats card the clinic owners asked for, because that's decided, and critiques where it sits instead.
 
 ## Prompt
 
@@ -14,85 +20,117 @@ Stage: mid-fidelity.
 Description: a left sidebar with navigation (Today, Calendar, Patients, Billing, Settings). The main area shows today's appointments as a table sorted by time: time, patient name, practitioner, status (Scheduled / Arrived / Late / No-show) as colored dots only. A "Check in" button appears on hover on each row. A large search bar sits at the top. A statistics card on the right shows "Appointments today", "No-show rate", and "Revenue this week".
 ```
 
+## The skill asks first
+
+Before I start the critique I need a few things from you. The skill starts from your own intent and concerns, and I can't guess those from the description.
+
+1. **Your concerns.** What made you want a critique? Is there a part of this screen you're unsure about or expect pushback on?
+2. **Decided vs. open.** Which parts are already settled (for example the sidebar nav, the table format, or the stats card) and which are still open to change?
+3. **What to compare against.** Is there a design system or component library, or sibling screens like Calendar and Patients, it should match? A competitor or current tool the receptionists use would also help.
+4. **Your intent for a few specific choices.** You may want to cover these in your answer to question 1:
+   - Is showing status as colored dots only (no text labels) deliberate?
+   - Is "Late" set automatically, for example X minutes after the appointment time, or by staff?
+   - Who is the stats card for: the receptionist, or a clinic manager who also uses this screen?
+
+**My one assumption so far:** this is a single-clinic view on a standard desktop monitor, used with a mouse. That matters for the "Check in" button, which only appears on hover.
+
+Once you reply, I'll run the critique through all five lenses (clarity, hierarchy, consistency, interaction and feedback, edge cases) and finish with your top 3 priorities for Thursday.
+
+## Designer's answers
+
+```text
+Decided: it's a desktop web app; check-in happens from this screen; the stats card is requested by clinic owners and stays somewhere.
+Open: whether late patients get their own group or stay in time order.
+My concerns: receptionists get interrupted constantly and lose their place; I'm not sure the hover-only Check in button is discoverable.
+Compare with: the Calendar screen of the same app (same table style and status dots).
+Dots only: not deliberate, it's mid-fidelity.
+Late: set automatically, 10 minutes after the appointment time.
+Stats card: for the clinic owner, who sometimes looks at this screen.
+```
+
 ## Output
 
-🎯 **Goal:** A receptionist who has just been interrupted should be able to glance at the screen, see who's next and who's late, and check a patient in with one click.
+# Design critique: Receptionist home screen ("Today")
+
+🎯 **Goal reminder:** A receptionist who keeps getting interrupted should be able to glance at the screen, see who is arriving next and who is late, and check a patient in with one tap.
+
+📋 **Assumptions:** I haven't seen the screen, so this critique works only from your description. I'm assuming a mouse on a standard monitor, one clinic, several practitioners, and a front-desk screen that patients can sometimes see.
 
 ---
 
-## 1. Clarity: does the user immediately understand what to do?
-
+### 1. Clarity
 ✅ **Working**
-- Putting today's appointments in the main area is the right choice. It's the screen's reason to exist, and it gets the most space.
-- Time, patient, practitioner and status are the right columns for front-desk work. There's nothing extra in the table.
+- A single table sorted by time fits how receptionists think about their day.
+- Setting "Late" automatically at +10 minutes means the receptionist never has to track the time themselves.
 
 ⚠️ **Needs attention**
-- **The main action is hidden behind hover.** Nothing tells a receptionist that "Check in" exists until they move the mouse over a row. That makes it two steps (find the row, hover, then click), and it disappears on touch screens, which some front desks use.
-  💡 Show a "Check in" button on every row whose status is Scheduled or Late. Once someone has arrived, replace the button with the arrival time ("Arrived 9:42"). The button should appear only where it's actually needed.
-- **Status is shown by color alone.** About 1 in 12 men has some form of color blindness, and red and green dots also look alike at a glance on a bright monitor. It also fails WCAG 1.4.1 (Use of Color).
-  💡 Pair each dot with a text label, e.g. "● Late · 12 min". For "Late", show how late: "Late" tells the receptionist less than "Late · 12 min" does.
-- **"Who is next" isn't answered.** A table sorted by time mixes past, current and future rows equally. After a phone call, the receptionist has to scan the whole list to find where they are.
-  💡 Add a current-time line across the table, and scroll to it automatically when the screen loads or regains focus. You could also put a small "Up next" strip above the table showing the next 2–3 arrivals.
+- **You asked: the hover-only "Check in" button.** Your worry is justified. A button that only appears on hover can't be seen at a glance, so the screen doesn't show which rows still need action. The receptionist also has to hunt for it with the mouse, often while on the phone.
+  💡 Show "Check in" permanently, but only on rows that can still be checked in (Scheduled and Late). On Arrived rows, replace it with plain text such as "Arrived 9:02". The column then shows who still needs to be checked in without any extra element. `major · design-only · known (your concern)`
+- **The screen doesn't answer "who is next?"** The table lists the whole day, so by 11:00 the next arrivals sit below a list of finished rows.
+  💡 Add a "Now" line in the table. Scroll to it when the page loads, and collapse past rows that are already done into a "Earlier today (12)" group. `major · design-only · new`
+- **Color is the only thing showing status.** People with color blindness can't tell the statuses apart, and nobody can read them at a distance.
+  💡 Pair each dot with a text label, and add an icon or shape for Late. `major · design-only · known (you confirmed it's a mid-fi gap)`
 
-## 2. Hierarchy: does visual weight match priority?
-
+### 2. Hierarchy
 ✅ **Working**
-- The sidebar is secondary, which is correct. Navigation isn't the job on this screen.
+- The appointments table is the main area, which matches the goal.
 
 ⚠️ **Needs attention**
-- **Late patients get the same weight as everyone else.** "Who is late" is half the goal, but a late patient is just a dot inside a time-sorted list, and may already have scrolled out of view.
-  💡 Pin late patients to the top in a "Needs attention" group, or give their whole row a tint as well as the text label. Being late is the exception the screen should call out.
-- **The large search bar competes with the table.** It's the most prominent element, but the goal is glancing at the schedule, not searching.
-  💡 Keep search, since receptionists do look people up when a patient calls or walks in, but make it normal size and give it a keyboard shortcut (e.g. `/`). If walk-in check-in through search turns out to be a main flow, that's a reason to keep it large. See the open questions below.
-- **The statistics card uses valuable space on the wrong audience.** "Revenue this week" and "No-show rate" are clinic-manager metrics. They don't help anyone check a patient in, and they take the right-hand column, where the eye goes after the table.
-  💡 Use that column for a **"Waiting room"** panel: arrived patients, who they're seeing, and how long they've waited (e.g. "Sam K. · Dr Lee · waiting 18 min"). That's the receptionist's second most frequent question. Move the stats to a manager dashboard or to Billing.
+- **The large search bar is the strongest element on the screen, but it's a secondary task.** Search is useful for "Is Mrs. X booked today?" calls, but it shouldn't pull the eye away from what's next and who's late.
+  💡 Make it normal size, keep it at the top, and give it a keyboard shortcut (`/` or Ctrl+K) so it stays fast to reach while on the phone. `minor · design-only · new`
+- **The stats card takes the prime right-hand column, but it serves an occasional viewer (the owner).** "Revenue this week" on a front-desk screen could also be seen by patients standing at the desk.
+  💡 The card stays, since that's decided, but shrink it to a collapsible strip or move it below the fold. Consider hiding revenue by default or showing it only to the owner role. `major · design-only for placement / needs product decision for revenue visibility · new`
+- **Your open question: group late patients, or keep time order?** I recommend keeping time order and not moving late patients into their own group. Late status is set automatically, so a separate group would make a row jump to another place at +10 minutes, possibly just as the receptionist goes to click it. That's the "lost my place" problem you're worried about.
+  💡 Keep late rows where they are and style them strongly: a tinted row with a label. Add a "2 late" chip above the table that scrolls to or highlights those rows. `major · design-only · new`
 
-## 3. Consistency: does it follow established patterns?
-
+### 3. Consistency
 ✅ **Working**
-- A left sidebar with a table is a familiar desktop admin layout, so there's nothing new to learn.
-- Four fixed status values give you a clear vocabulary.
+- It reuses the Calendar table style and status dots, so receptionists learn one visual language.
 
 ⚠️ **Needs attention**
-- **The status list stops at arrival.** Scheduled, Arrived, Late and No-show cover the time before the visit, but not "In consultation", "Done" or "Cancelled". If the practitioner's side of the app uses those states, this screen will disagree with it.
-  💡 Map out the full lifecycle of an appointment once, then decide which states this screen shows and which it combines. For example, Done could be shown greyed out.
-- **"Today" and "Calendar" overlap.** Today is presumably the calendar filtered to today. If the two screens show the same appointments in different formats, receptionists have to learn both.
-  💡 Either make Today a clearly different view (a live front-desk list) with a "Today" button on Calendar, or reuse the same row component and status labels in both screens.
-- **Hover-reveal actions:** Check whether other tables in the app use this pattern. If this is the only one, it's inconsistent. If they all do, the problem above applies to all of them.
-  💡 Make a system-wide rule: actions a user takes often are always visible, and only secondary actions hide behind hover or a "⋯" menu.
+- **Adding text labels to statuses here will create a mismatch with Calendar.**
+  💡 Build status as one shared component (dot + label) and update Calendar at the same time. `minor · needs dev · new`
+- **Status list:** four statuses may not cover the whole visit. Does Calendar have states like "In consultation", "Done" or "Cancelled"?
+  💡 Both screens should use the same status list. If there's no "Done" status, a patient who has left stays "Arrived" and clutters the view of who is waiting. `minor · needs product decision · new`
 
-## 4. Edge cases: which states are missing?
+### 4. Interaction & feedback
+✅ **Working**
+- One-tap check-in directly from the list, with no extra screen, is the right weight for this task.
 
-⚠️ **Needs attention**, with a 💡 suggestion for each:
+⚠️ **Needs attention**
+- **You asked: interruptions and losing their place.** Nothing described helps someone who comes back after a call.
+  💡 Keep the row being worked on (selected or last-touched) highlighted after the receptionist looks away. Never re-sort or auto-scroll while the pointer is over the table. Add a small "Recent actions" list, e.g. "Checked in J. Ramos, 9:02", so they can see what they did before the call. `major · design-only (live-update behavior needs dev) · known (your concern)`
+- **No feedback or undo after check-in.** An interrupted user mis-clicking the row next to the right one is the most likely error on this screen.
+  💡 On check-in, update the row in place (status + time) and show a toast like "Checked in Maria Lopez · Undo" for about 10 seconds. Also make an Arrived patient reversible from the row. Don't add a confirmation dialog, which would slow down the common case. `major · design-only · new`
+- **Search behavior is undefined.** If search navigates to Patients, the receptionist loses their spot in today's list.
+  💡 When the query is typed, filter today's table in place first, and link to "Search all patients" as a second option. `minor · design-only · new`
 
-| State | Risk | Suggestion |
-|---|---|---|
-| **Wrong check-in** | One click on a crowded table is easy to get wrong, and a wrong status misleads practitioners | A toast after checking in, "Checked in Maria Lopez · Undo", visible for about 8 seconds |
-| **Check-in fails** (network, server) | The receptionist believes it worked, but the practitioner is never notified | Show the row as pending until the server confirms. If it fails, show an error on that row with "Retry", not only a toast that disappears |
-| **Stale or offline data** | "Late" depends on the current time. A frozen screen shows wrong statuses with full confidence | "Updated 2 min ago" indicator, plus an offline banner if the connection drops |
-| **Two receptionists at once** | Both check in the same patient, or one marks No-show while the other checks in | Update rows live, and show "Already checked in by Anna at 9:41" |
-| **Empty day / clinic closed** | A blank table looks like a loading error | "No appointments today" with a link to Calendar |
-| **Loading** | A layout jump when the table appears loses the receptionist's place | Skeleton rows with the same height as real rows |
-| **Patients with the same name** | The wrong John Smith gets checked in | Show a second identifier (date of birth or last 4 digits of phone) on the row or in the hover |
-| **Walk-in / no appointment** | There's no row to check in | An "Add walk-in" action next to search |
-| **Early arrival** | The patient's row is far down the list | Search → check in should work for any row, and scroll to that row |
-| **Late → arrives / No-show rules** | When does Late become No-show? Automatically or by hand? | Define the threshold and allow a manual override. Let a late patient be checked in directly |
-| **Permissions** | Receptionists may not be allowed to see revenue | Another reason to remove the stats card. At minimum, hide revenue based on role |
-| **Busy day (40+ rows)** | "At a glance" stops working | Filter by practitioner, collapse or grey out finished appointments, keep the header visible when scrolling |
+### 5. Edge cases
+⚠️ **Needs attention**
+💡 For each of these, add a state or a rule:
+- **Two patients with the same or similar name at close times.** The receptionist could check in the wrong person. Show date of birth or another identifier on hover or in the row. `major · design-only · new`
+- **Check-in fails because of a network or server error.** The row must not look like Arrived. Show an inline error with Retry. `major · needs dev · new`
+- **A late patient arrives.** Check-in must still work from Late. Should the arrival time show as late for the record? `minor · needs product decision · new`
+- **No-show:** is it set automatically or by staff, and can it be reversed when the patient turns up? `major · needs product decision · new`
+- **Walk-ins or patients not on today's list.** There's no path for them from this screen. Add "Add walk-in" near the table. `minor · needs product decision · new`
+- **Empty day, clinic closed, loading, end of day with everyone done.** Each needs its own state. `minor · design-only · new`
+- **Busy day** (40+ rows, several practitioners): consider a practitioner filter. Also check long names and overlapping slots. `minor · design-only · new`
 
 ---
 
-## Top 3 priorities before the next review
-1. **Make check-in visible and one click, with undo.** Show the button on every row that needs it, and add Undo and a failure state.
-2. **Make "late" and "next" stand out without scanning.** Use text labels plus color ("Late · 12 min"), a current-time line with auto-scroll, and put late patients at the top or tint their rows.
-3. **Replace the statistics card with a Waiting room panel.** It serves the receptionist, and it avoids exposing revenue to the wrong role.
+### Top 3 priorities before Thursday
+1. **Make "Check in" always visible on actionable rows, and add in-row feedback plus Undo.** This answers both of your concerns directly.
+2. **Anchor the view on "now".** Add the Now line, collapse past rows, keep late patients in time order with a "late" chip, and never reshuffle rows under the user's cursor. That settles your open question.
+3. **Rebalance the hierarchy.** Add text labels to statuses, reduce the search bar, and demote the stats card, with a decision on whether revenue should show at the front desk.
 
-## Open questions for the designer
-- Have you watched receptionists work? How often do they look people up by name compared with scanning the list? The answer decides how prominent search should be.
-- Is the front-desk screen ever a touchscreen or tablet? If so, hover-reveal actions have to go.
-- What happens after check-in? Is the practitioner notified, and does this screen need to show that the notification went through?
-- Who defines "Late" and "No-show": fixed thresholds, per-clinic settings, or manual marking?
-- Is one receptionist usually handling several practitioners at once? If so, do they need to filter or group the list by practitioner?
-- Why did the statistics card make it into this screen? If a stakeholder asked for it, it's worth knowing before Thursday, since removing it may need some argument.
+### Not checked
+- **The screen itself:** I worked only from your written description, so I couldn't judge spacing, contrast, type sizes or real density.
+- **The Calendar screen:** I haven't seen it, so the consistency findings are based only on your note that it shares the table style and dots.
+- **Missing states:** no loading, empty, error or permission states were described.
 
-For Thursday, it may help to present this as a **30-second interruption test**: a receptionist looks away for a phone call, then looks back. Can they tell who's next and who's late in under 3 seconds? That gives reviewers a concrete test to judge the design against instead of trading opinions.
+### Open questions for you
+- Can patients see the front-desk screen? This decides how prominent revenue, and even full patient names, should be.
+- Who sets No-show, and when? Can it be undone?
+- Does the receptionist need to see only today, or also tomorrow's first appointments at the end of the day?
+- Is there a "Done" or "Left" status after the consultation, or does "Arrived" last until the end of the day?
+- Do receptionists use the keyboard a lot? If so, keyboard check-in could beat one-tap: arrow keys to move between rows and Enter to check in.

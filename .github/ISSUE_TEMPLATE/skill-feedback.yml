@@ -23,6 +23,11 @@ body:
         - design-scope-negotiator
         - experiment-design
         - data-interpretation
+  - type: input
+    id: version
+    attributes:
+      label: Which version? (optional)
+      description: If you know it, e.g. 1.1.0. It's in the plugin, or in the release you downloaded the zip from.
   - type: dropdown
     id: tool
     attributes:
