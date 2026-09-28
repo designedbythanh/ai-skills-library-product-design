@@ -14,9 +14,18 @@ Every skill has an example like this next to it, run in Claude Code on a fiction
 
 ## Does it work?
 
-I tested `design-critique-facilitator` against a redesign I had already made on a real product, rebuilt as a fictional case. The current version found 9 of the 11 problems the real redesign fixed, asked for my intent before critiquing, and pushed back on one of my own decisions. It also praised two things it shouldn't have. The full test, with what it still gets wrong and the limits of the test, is in [EVAL.md](skills/design-critique-facilitator/EVAL.md).
+I tested `design-critique-facilitator` against a redesign I had already made on a real product, rebuilt as a fictional case. Version 1.1.0 found 9 of the 11 problems the real redesign fixed, asked for my intent before critiquing, and pushed back on one of my own decisions. It also praised two things it shouldn't have. The full test, with what it still gets wrong and the limits of the test, is in [EVAL.md](skills/design-critique-facilitator/EVAL.md).
 
-In the same session I ran two more skills on that page, and scored them too. [`edge-case-finder`](skills/edge-case-finder/EVAL.md) found four real problems the critique had missed, but 5 of its 13 "fix before launch" items were shortcuts in my prototype. [`persona-pretest`](skills/persona-pretest/EVAL.md) suggested the same top 3 fixes the real redesign made. Those two are single scored runs, not comparisons. The other 12 skills have their example runs, not a scored test.
+In the same session I ran two more skills on that page, and scored them too. [`edge-case-finder`](skills/edge-case-finder/EVAL.md) found four real problems the critique had missed, but 5 of its 13 "fix before launch" items were shortcuts in my prototype. [`persona-pretest`](skills/persona-pretest/EVAL.md) suggested the same top 3 fixes the real redesign made.
+
+For v1.2.0, I also ran the critique and edge-case skills against Claude without them, 3 times per case with `claude plugin eval`. Claude alone already catches most problems when the facts are in the prompt. The skills change how it gets there, and that's where they earn their place:
+
+- **They ask before they answer.** Without the skill, Claude critiqued straight away every time (0 of 3). With it, it asked what I intend, what's decided and what worries me (3 of 3). In a real work session, skipping that step is how the older version took my intent from an outdated spec and suggested something we had already decided against.
+- **The critique doesn't praise what it hasn't measured.** Without the skill, Claude listed colors as fine with no numbers (0 of 3 with a ratio). A wrong "needs attention" costs a minute to reject. A wrong "this works" goes unchallenged.
+- **`edge-case-finder` knows what it's looking at.** It asks whether it's reviewing a prototype or a production build (3 of 3, against 0 of 3 without). In my first test, before that rule, 5 of its 13 top items were prototype shortcuts I had to sort out by hand.
+- **Same shape every time.** Each critique finding carries a severity, an owner and whether it was already known, so you can sort a long list without rereading it.
+
+The cases are in [`evals/`](evals/), so you can run them yourself. The other 12 skills have their example runs, not a scored test.
 
 ## The 15 skills, in the order you'd use them
 

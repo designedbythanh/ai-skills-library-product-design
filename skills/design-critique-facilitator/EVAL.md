@@ -1,8 +1,35 @@
-# How I tested design-critique-facilitator v1.1.0
+# How I tested design-critique-facilitator
+
+Two tests so far. For v1.2.0, I ran the skill 15 times on small made-up cases and Claude 15 times without it, to see where the skill actually changes the answer. For v1.1.0, I scored it against a redesign I had already made on a real product.
+
+## v1.2.0: with and without the skill
+
+**What changed.** v1.1.0 praised switch colors without measuring them. v1.2.0 has to check before it lists anything as working: for colors, it runs a small contrast script that ships with the skill ([`scripts/contrast.py`](scripts/contrast.py)) or computes the ratio itself. If it can't check something, it goes under "Not checked".
+
+**How I tested it.** Five short, made-up cases in [`evals/`](../../evals/), with the colors written in the prompt. Each ran 3 times with the skill and 3 times without it, using `claude plugin eval` with Claude Opus 5.5 on 27 September 2026. Claude Sonnet graded each answer against criteria I wrote, and I read every answer that failed a criterion.
+
+| Case | With the skill | Without |
+|---|---|---|
+| Asks for my intent and what's decided before critiquing | 3 of 3 | 0 of 3 |
+| Lists a color as working only with a measured ratio | 3 of 3 | 0 of 3 |
+| Flags an off switch at 1.24:1 and hint text at 2.54:1 | 3 of 3 | 3 of 3 |
+| No false alarm when every color passes | 3 of 3 | 3 of 3 |
+| Keeps a banner I said was decided | 3 of 3 | 3 of 3 |
+| Stays out of a request that isn't a critique (a React bug) | Not used, 3 of 3 | n/a |
+
+**What this shows.** Claude without the skill already catches bad contrast when it's given the colors, and it respects a decision when you say it's decided. The skill's difference is in how it works: it asks before it critiques, and it doesn't praise what it hasn't measured. That's narrower than I expected, and it's the part I care about most. Asking first is what keeps the critique tied to what I'm trying to do rather than to an old spec, which is where v1.0.0 slipped in the test below: it took the goal from the spec and didn't wait for an answer. And an unmeasured "this works" is the kind of mistake nobody catches later, because nobody rereads the praise.
+
+**The grader made mistakes.** Claude Sonnet marked two of the skill's answers as failing when they weren't. One listed every color with its ratio but was failed anyway. The other suggested a lighter row divider at 1.24:1 and said decorative dividers don't need 3:1, which is right, and was marked as a false alarm. In a first pilot, one criterion was worded so loosely that moving the banner lower on the same screen counted as removing it. I rewrote it before the full run. The table above uses my reading of those answers, not the grader's.
+
+**Run it yourself:** `claude plugin eval . --case 'critique-*' --runs 3 --allow-tools Bash`
+
+**Limits.** The cases are small and made up, with colors given as text, so the skill never had to find colors in a real design. One model, 3 runs per case. The grader is a model too, and it was wrong often enough that its score alone isn't enough.
+
+## v1.1.0: scored against a real redesign
 
 Before releasing v1.1.0, I ran both versions on the same page and scored every finding against a redesign I had already made on the real product. The biggest change is in how it works. v1.1.0 asks what I'm trying to do before it critiques, instead of taking the goal from an old spec. It found the root of a problem v1.0.0 only saw the surface of, and it pushed back on one of my own decisions. It still praises things it shouldn't, and it missed one problem v1.0.0 caught. The counts (9 against 8 of the 11 problems found) come from one run of each version, so they're a rough sign at best.
 
-## The test
+### The test
 
 I rebuilt a real settings page as a fictional one, so I could publish the test. "Northbeam" is a made-up recruiting platform for staffing agencies. On its "Pipeline fields" page, an agency chooses which candidate fields show at each hiring stage (Sourcing, Screening, Interview, Offer), then changes that choice for a single client. Names, domain and visuals are all different from the original.
 
@@ -18,7 +45,7 @@ I ran each version in a fresh Claude Code setup, with the same model (Claude Opu
 - **Run 1:** v1.0.0, called the way I usually call it: page open, skill name, nothing else.
 - **Run 2:** v1.1.0. It asked me four questions first, and I answered in my own words. Then I ran two more skills from this library on the same page, `edge-case-finder` and `persona-pretest`.
 
-## Results
+### Results
 
 These numbers compare the critique skill alone. The two extra skills in run 2 are covered further down.
 
@@ -35,7 +62,7 @@ These numbers compare the critique skill alone. The two extra skills in run 2 ar
 
 The 3 real problems v1.0.0 added: a failed save shows nothing, a search with no match shows an empty table, and the agency page says "Changes here reach all clients", which is false for clients that set their own value. v1.1.0 found the same 3, plus 2 of its own (below). Both versions also suggested explaining why some fields are locked. I left that out of the count: my list had an item about the lock, but I dropped it once I decided to keep the lock for this case, so neither version was really tested on it.
 
-## Where v1.1.0 did better
+### Where v1.1.0 did better
 
 **It found the real problem with autosave.** v1.0.0 only flagged the small reset button, because it resets a whole stage with no warning. v1.1.0 went further. Any wrong click saves instantly and leaves no trace, and a wrong click at agency level reaches every client that hasn't set its own value. It proposed a status line with Undo after each change.
 
@@ -45,7 +72,7 @@ The 3 real problems v1.0.0 added: a failed save shows nothing, a search with no 
 
 **It noticed a filter that looks like a setting.** The "Active fields only" filter uses the same switch as the settings, so it reads like one more thing that saves.
 
-## What two more skills added
+### What two more skills added
 
 In run 2, I followed the critique with two more skills from this library:
 - **`edge-case-finder`** found a problem from my "left for later" list that the critique missed: a client's setting switched back by hand still counts as the client's own, so later agency changes skip that client. It also found 3 new real problems. One depends on how the real product saves, which I haven't checked.
@@ -53,7 +80,7 @@ In run 2, I followed the critique with two more skills from this library:
 
 All of run 2 took about 5 minutes, against 1 min 14 s for run 1.
 
-## Second check: the old example
+### Second check: the old example
 
 I also re-ran v1.1.0 on the fictional clinic prompt from the v1.0.0 example, to see what it lost. That run is now the [example](EXAMPLE.md).
 
@@ -62,19 +89,19 @@ I also re-ran v1.1.0 on the fictional clinic prompt from the v1.0.0 example, to 
 - **Lost, among others:** out-of-date data, two receptionists working at once, and early arrivals.
 - **Cost:** one extra round of questions, even though the prompt already gave the goal, the user and the stage.
 
-## Still wrong in v1.1.0
+### Still wrong in v1.1.0
 
-- **It praises without checking.** Both versions listed the switch colors as working. v1.0.0 said they're easy to scan, v1.1.0 said they follow the guidelines. The grey "off" switch is about 1.2:1 against white, well below the 3:1 accessibility minimum. Both also praised the header block the redesign changed. Praise needs the same evidence as criticism.
+- **It praises without checking.** (Addressed in v1.2.0, see above.) Both versions listed the switch colors as working. v1.0.0 said they're easy to scan, v1.1.0 said they follow the guidelines. The grey "off" switch is about 1.2:1 against white, well below the 3:1 accessibility minimum. Both also praised the header block the redesign changed. Praise needs the same evidence as criticism.
 - **It's narrower.** v1.1.0 missed the mixed wording ("visible", "active", "shown" for the same thing) that v1.0.0 caught, and lost some breadth on the clinic example.
 - **It asks even when it doesn't need to.** The extra round of questions happens even when the prompt already answers most of them.
 
-## If you use this skill
+### If you use this skill
 
 - **Answer its questions in your own words,** especially what's already decided and what worries you. The best findings in run 2 came straight from those answers.
 - **Read the "Working" list first, and check it.** Both versions praised things that were problems. A wrong "needs attention" costs a minute to reject. A wrong "working" goes unchallenged.
 - **For a risky flow, run `edge-case-finder` and `persona-pretest` after it.** They found problems the critique missed, for about 3 more minutes.
 
-## What changed in the skill
+### What changed in the skill
 
 I wrote v1.1.0 on 25 September, the day before these runs, after a real work session where v1.0.0 took its idea of what I wanted from an outdated spec and suggested something we had already decided against. These runs tested v1.1.0. They didn't produce it.
 
@@ -87,7 +114,7 @@ I wrote v1.1.0 on 25 September, the day before these runs, after a real work ses
 | Opens every state it can set up itself | v1.0.0 looked at one client, at two widths |
 | Severity and owner on each finding, plus a "Not checked" list | v1.0.0 gave no way to sort findings or see what it skipped |
 
-## How I scored it, and the limits
+### How I scored it, and the limits
 
 I scored every finding by hand. A finding counted if it matched a problem on my list and pointed in a sound direction. "Real problems that weren't in my list" are ones I checked and agree with. "Already known" means the problem was in the dev review or the backlog, so the finding confirms rather than discovers. I left out findings caused by bugs in my own prototype (for example a menu button that does nothing, or a role check I got wrong), and generic ones such as "add a loading state" to a static prototype.
 

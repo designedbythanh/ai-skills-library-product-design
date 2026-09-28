@@ -1,8 +1,19 @@
 # Changelog
 
-## Unreleased
+## 1.2.0 · 2026-09-28
 
+### design-critique-facilitator
+- Lists something as working only after checking it. Ships [`scripts/contrast.py`](skills/design-critique-facilitator/scripts/contrast.py) to measure color contrast; anything it can't check goes under "Not checked".
+- Description now says it asks before critiquing and measures before praising, to tell it apart from other critique skills.
+
+### edge-case-finder
+- Asks what it's looking at (spec, prototype, staging or production). Cases caused only by prototype shortcuts are tagged "prototype only" and kept out of High priority.
+
+### Evals
+- [`evals/`](evals/): 10 cases for `claude plugin eval`, run with and without the plugin. Results are in each skill's EVAL.md.
 - Scored runs for [`edge-case-finder`](skills/edge-case-finder/EVAL.md) and [`persona-pretest`](skills/persona-pretest/EVAL.md), from the same test session as the design-critique-facilitator eval.
+
+### Repo
 - CI checks skills, manifests and links on every push.
 
 ## 1.1.0 · 2026-09-27
