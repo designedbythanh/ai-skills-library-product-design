@@ -1,0 +1,8 @@
+schema_version: "1"
+name: context-05-prd-next-line
+execution:
+  max_turns: 20
+  timeout_seconds: 600
+  allowed_tools: [Skill, Read]
+  prompt: |
+    Write a PRD first draft for "Saved searches" in Homely, a flat-rental app. Renters can save a search (area, price range, rooms) and get an email when a new flat matches. Goal: bring back renters who didn't find a flat on their first visit. Users: people renting in a city they know, mostly on phones. Constraint: launch in 6 weeks with one backend and one mobile engineer.

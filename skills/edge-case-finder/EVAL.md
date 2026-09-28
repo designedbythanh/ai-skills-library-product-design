@@ -1,6 +1,6 @@
 # How I tested edge-case-finder
 
-Two tests so far. For v1.2.0, I ran the skill 15 times on small made-up cases and Claude 15 times without it. Before that, I scored one run against a redesign I had already made on a real product.
+Three tests so far. For v1.2.0 and again for v1.3.0, I ran the skill 15 times on small made-up cases and Claude 15 times without it. Before that, I scored one run against a redesign I had already made on a real product.
 
 ## v1.2.0: with and without the skill
 
@@ -23,6 +23,21 @@ Two tests so far. For v1.2.0, I ran the skill 15 times on small made-up cases an
 **Run it yourself:** `claude plugin eval . --case 'edge-*' --runs 3`
 
 **Limits.** Small made-up cases, described in text rather than a real build. One model, 3 runs per case. The grader is a model too.
+
+## v1.3.0: the same cases again
+
+v1.3.0 added context files and a "Next" line to every skill, so I re-ran the five edge-case cases on 28 September 2026. The skill passed every criterion again, and every finished answer ended with its "Next" line (pointing to `acceptance-criteria`).
+
+| Case | With the skill (v1.2.0 run + v1.3.0 run) | Without |
+|---|---|---|
+| Asks or states what's being reviewed, when I didn't say | 6 of 6 | 0 of 6 |
+| Prototype: doesn't rank the shortcuts as problems to fix | 6 of 6 | 5 of 6 |
+| Production: treats the same shortcuts as blockers | 6 of 6 | 6 of 6 |
+| Covers all five areas | 6 of 6 | 6 of 6 |
+
+This time the grader failed two of the answers without the skill that were right: one listed typos, duplicates and inviting someone already on the team as real cases, and one covered all five areas under its own headings. I counted both as passes. The difference is still the first row.
+
+In a separate case (see the [product-context eval](../product-context/EVAL.md)), the skill read the build stage from a brief instead of asking, and added its findings to the brief's Log.
 
 ## First test: one scored run on a real redesign
 

@@ -1,0 +1,20 @@
+schema_version: "1"
+name: context-03-critique-reads-brief
+context:
+  scaffold_script: scaffold.sh
+execution:
+  max_turns: 20
+  timeout_seconds: 600
+  allowed_tools: [Skill, Read, Write, Glob, Bash]
+  prompt: |
+    Can you critique the Invoices list? CSS:
+
+    ```css
+    body { background: #ffffff; }
+    .invoice-title { color: #111827; font-size: 15px; }
+    .invoice-meta  { color: #4b5563; font-size: 13px; }
+    .row           { border-bottom: 1px solid #6b7280; }
+    .status-paid   { color: #0f766e; font-size: 13px; }
+    ```
+
+    Layout: a table of invoices (client, amount, due date, status), newest first, with a "New invoice" button top right. Each row opens the invoice.

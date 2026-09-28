@@ -8,6 +8,7 @@ body:
     attributes:
       label: Which skill did you use?
       options:
+        - product-context
         - five-whys-root-cause
         - user-interview-synthesis
         - persona-pretest

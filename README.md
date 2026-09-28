@@ -1,6 +1,6 @@
 # AI Skills Library for Product & Design Teams
 
-15 AI skills for product designers and product managers, from understanding a problem to reading the results after launch. Each skill is a short set of instructions your AI tool follows for one job: critiquing a design, finding edge cases, writing acceptance criteria. They ask for the context they need instead of guessing, and each one comes with a real, unedited run you can read before trying it.
+16 AI skills for product designers and product managers, from understanding a problem to reading the results after launch. Each skill is a short set of instructions your AI tool follows for one job: critiquing a design, finding edge cases, writing acceptance criteria. They ask for the context they need instead of guessing, and each one comes with a real, unedited run you can read before trying it.
 
 by [Thanh Nguyen](https://www.linkedin.com/in/thanh2-nguyen/) · Product Designer, AI-native workflows · [Substack](https://designedbythanh.substack.com) · [Notion templates](https://www.notion.com/@thanh-nguyen)
 
@@ -18,19 +18,21 @@ I tested `design-critique-facilitator` against a redesign I had already made on 
 
 In the same session I ran two more skills on that page, and scored them too. [`edge-case-finder`](skills/edge-case-finder/EVAL.md) found four real problems the critique had missed, but 5 of its 13 "fix before launch" items were shortcuts in my prototype. [`persona-pretest`](skills/persona-pretest/EVAL.md) suggested the same top 3 fixes the real redesign made.
 
-For v1.2.0, I also ran the critique and edge-case skills against Claude without them, 3 times per case with `claude plugin eval`. Claude alone already catches most problems when the facts are in the prompt. The skills change how it gets there, and that's where they earn their place:
+For v1.2.0 and v1.3.0, I also ran the skills against Claude without them, 3 times per case with `claude plugin eval`. Claude alone already catches most problems when the facts are in the prompt. The skills change how it gets there, and that's where they earn their place:
 
-- **They ask before they answer.** Without the skill, Claude critiqued straight away every time (0 of 3). With it, it asked what I intend, what's decided and what worries me (3 of 3). In a real work session, skipping that step is how the older version took my intent from an outdated spec and suggested something we had already decided against.
-- **The critique doesn't praise what it hasn't measured.** Without the skill, Claude listed colors as fine with no numbers (0 of 3 with a ratio). A wrong "needs attention" costs a minute to reject. A wrong "this works" goes unchallenged.
-- **`edge-case-finder` knows what it's looking at.** It asks whether it's reviewing a prototype or a production build (3 of 3, against 0 of 3 without). In my first test, before that rule, 5 of its 13 top items were prototype shortcuts I had to sort out by hand.
+- **They ask before they answer.** Without the skill, Claude critiqued straight away in 5 of 6 runs. With it, it asked what I intend, what's decided and what worries me in 6 of 6. In a real work session, skipping that step is how the older version took my intent from an outdated spec and suggested something we had already decided against.
+- **The critique doesn't praise what it hasn't measured.** With the skill, every color it called fine came with a ratio (6 of 6 runs). Without it, 3 of 6: all of one run's answers, none of the other's. A wrong "needs attention" costs a minute to reject. A wrong "this works" goes unchallenged.
+- **`edge-case-finder` knows what it's looking at.** It asks whether it's reviewing a prototype or a production build (6 of 6 runs, against 0 of 6 without), or reads it from the brief. In my first test, before that rule, 5 of its 13 top items were prototype shortcuts I had to sort out by hand.
+- **They write things down.** With `product-context` and a brief in place, each skill adds what it found to the brief's Log, so the next skill or the next session starts from there (3 of 3 runs; without the plugin, nothing was written). See the [product-context eval](skills/product-context/EVAL.md).
 - **Same shape every time.** Each critique finding carries a severity, an owner and whether it was already known, so you can sort a long list without rereading it.
 
 The cases are in [`evals/`](evals/), so you can run them yourself. The other 12 skills have their example runs, not a scored test.
 
-## The 15 skills, in the order you'd use them
+## The 16 skills, in the order you'd use them
 
 | Stage | Skill | What it does | |
 |---|---|---|---|
+| **Before you start** | [`product-context`](skills/product-context/SKILL.md) | Writes down the context the other skills keep asking for: a `PRODUCT.md` for the product and a brief per feature | [Example](skills/product-context/EXAMPLE.md) |
 | **Understand the problem** | [`five-whys-root-cause`](skills/five-whys-root-cause/SKILL.md) | Finds the real need behind a feature request, then other ways to meet it | [Example](skills/five-whys-root-cause/EXAMPLE.md) |
 | | [`user-interview-synthesis`](skills/user-interview-synthesis/SKILL.md) | Turns raw notes from several interviews into ranked insights and unspoken needs | [Example](skills/user-interview-synthesis/EXAMPLE.md) |
 | | [`persona-pretest`](skills/persona-pretest/SKILL.md) | Walks through a design as a specific user, to find confusion and drop-off before real testing | [Example](skills/persona-pretest/EXAMPLE.md) · [Eval](skills/persona-pretest/EVAL.md) |
@@ -49,6 +51,18 @@ The cases are in [`evals/`](evals/), so you can run them yourself. The other 12 
 
 Two skills sit later than you might expect. `success-metrics-definition` belongs right after the spec, not at the end, and `design-scope-negotiator` comes in under deadline pressure, not right after ideas. In testing, Claude often suggested the next skill in this order on its own, for example offering `acceptance-criteria` after a `prd-first-draft`.
 
+## How the skills work together
+
+Each skill ends with a "Next" line: the skill that usually comes after it, and what to carry over. For example, `edge-case-finder` points to `acceptance-criteria`, carrying its high-priority cases.
+
+In Claude Code, the skills also share two files that `product-context` writes:
+- **`PRODUCT.md`**: the product, its users, roles, references (each with a link), vocabulary, and where known issues are tracked.
+- **`briefs/<feature>.md`**: one per feature, with the goal, the stage, what's decided (with a date and who agreed it), what's open, what worries you, and a **Log**.
+
+Every skill reads these first and only asks for what's missing. When a brief exists, each skill adds a short dated entry to its Log, so the next skill, or the next session, starts from what's already been found. In claude.ai, ChatGPT or Gemini, where skills can't keep files, `product-context` prints both files for you to save and paste.
+
+Only one chain has been tested so far: `design-critique-facilitator`, then `edge-case-finder` and `persona-pretest` on the same design. The other "Next" suggestions follow from what each skill produces and needs, not from a test.
+
 ## How each skill is built
 
 Each skill is one `SKILL.md` file with four parts:
@@ -62,7 +76,7 @@ Each skill is one `SKILL.md` file with four parts:
 | Tool | How |
 |---|---|
 | **Claude** (claude.ai / Desktop) | Download a skill's `.zip` from the [latest release](https://github.com/designedbythanh/ai-skills-library-product-design/releases/latest) (no GitHub account needed) and upload it in Settings → Capabilities (or Skills). Or create a new skill there and paste the name, description and instructions by hand. Claude uses it on its own when it fits. |
-| **Claude Code** | Install all 15 as a plugin (below), or copy skill folders by hand. |
+| **Claude Code** | Install all 16 as a plugin (below), or copy skill folders by hand. |
 | **ChatGPT** | Paste a skill's instructions into a Custom GPT (Explore GPTs → Create) or a Project's instructions. You open that GPT or Project yourself when you need it. |
 | **Gemini** | Paste a skill's instructions into a Gem (Gems → New Gem), then open that Gem when you need it. |
 | **Any other tool** | Paste the instructions into a new chat, followed by your details. |

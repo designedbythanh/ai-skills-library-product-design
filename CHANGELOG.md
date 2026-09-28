@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.3.0 · 2026-09-28
+
+### New skill
+- [`product-context`](skills/product-context/SKILL.md) writes a `PRODUCT.md` for the product and a brief per feature (goal, stage, what's decided with a date and who, what's open, worries, and a Log). It marks missing answers "Not provided" instead of guessing, and leaves out references without a link.
+
+### All skills
+- Read `PRODUCT.md` and the feature's brief first, and ask only for what's missing.
+- End with a "Next" line: the skill that usually follows, and what to carry over.
+- When a brief exists and files can be written, add a dated entry to its Log.
+- `design-critique-facilitator` treats a brief the designer wrote as their intent, so it doesn't ask again for what the brief already covers.
+
+### Evals
+- 5 new cases for the shared files, the Log and the "Next" line; the 10 existing cases re-run. Results in the [product-context eval](skills/product-context/EVAL.md) and each skill's EVAL.md.
+
 ## 1.2.0 · 2026-09-28
 
 ### design-critique-facilitator

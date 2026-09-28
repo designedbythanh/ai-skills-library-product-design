@@ -1,6 +1,6 @@
 # How I tested design-critique-facilitator
 
-Two tests so far. For v1.2.0, I ran the skill 15 times on small made-up cases and Claude 15 times without it, to see where the skill actually changes the answer. For v1.1.0, I scored it against a redesign I had already made on a real product.
+Three tests so far. For v1.2.0 and again for v1.3.0, I ran the skill 15 times on small made-up cases and Claude 15 times without it, to see where the skill actually changes the answer. For v1.1.0, I scored it against a redesign I had already made on a real product.
 
 ## v1.2.0: with and without the skill
 
@@ -24,6 +24,20 @@ Two tests so far. For v1.2.0, I ran the skill 15 times on small made-up cases an
 **Run it yourself:** `claude plugin eval . --case 'critique-*' --runs 3 --allow-tools Bash`
 
 **Limits.** The cases are small and made up, with colors given as text, so the skill never had to find colors in a real design. One model, 3 runs per case. The grader is a model too, and it was wrong often enough that its score alone isn't enough.
+
+## v1.3.0: the same cases again
+
+v1.3.0 added context files and a "Next" line to every skill, so I re-ran the five critique cases on 28 September 2026 to check nothing broke. The skill scored the same. Claude without the skill did better on one row this time.
+
+| Case | With the skill (v1.2.0 run + v1.3.0 run) | Without |
+|---|---|---|
+| Asks for my intent and what's decided before critiquing | 6 of 6 | 1 of 6 |
+| Lists a color as working only with a measured ratio | 6 of 6 | 3 of 6 |
+| Flags the failing contrast, no false alarm on passing colors, keeps the decided banner | 6 of 6 each | 6 of 6 each |
+
+So the measuring rule is less of a difference than the first run suggested: without the skill, Claude gave ratios in all three runs this time and in none the time before. The skill does it every time. Asking first is still the clear difference.
+
+The grader again failed two of the skill's answers that were right: both suggested a lighter color for decorative row dividers, which the grader read as a false contrast alarm. I rewrote that criterion. Every finished critique also ended with the new "Next" line.
 
 ## v1.1.0: scored against a real redesign
 

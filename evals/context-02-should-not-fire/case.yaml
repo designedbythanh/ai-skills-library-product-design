@@ -1,0 +1,8 @@
+schema_version: "1"
+name: context-02-should-not-fire
+execution:
+  max_turns: 20
+  timeout_seconds: 600
+  allowed_tools: [Skill, Read]
+  prompt: |
+    Write short release notes for this week's changes to our booking app: faster search, a fix for double bookings, and a new dark mode. Three bullets, friendly tone.

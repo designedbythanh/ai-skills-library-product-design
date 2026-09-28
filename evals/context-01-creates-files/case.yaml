@@ -1,0 +1,14 @@
+schema_version: "1"
+name: context-01-creates-files
+execution:
+  max_turns: 20
+  timeout_seconds: 600
+  allowed_tools: [Skill, Read, Write, Glob, Bash]
+  prompt: |
+    Set up the shared context for Tidewater before we start on the next feature.
+
+    Tidewater is a booking app for small sailing schools. Instructors use it on a tablet at the dock to check who's booked on each lesson, often with wet hands and in bright sun. Admins can change lessons and prices; instructors can only mark attendance.
+    References: Calendly's booking page, and our own Payments screen.
+    We say "lesson", never "class" or "session".
+    Known issues are in a Notion page called "Tidewater bugs".
+    Feature: Attendance check-in. Goal: let an instructor mark who showed up in under 30 seconds per lesson. Stage: spec only. Decided: attendance works offline and syncs later (agreed with Ravi, CTO, 20 Sep 2026). Open: whether to show a photo for each student. Worry: instructors will skip it if it takes more than a few taps.
