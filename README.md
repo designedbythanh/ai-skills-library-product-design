@@ -28,7 +28,7 @@ For v1.2.0 and v1.3.0, I also ran the skills against Claude without them, 3 time
 
 The cases are in [`evals/`](evals/), so you can run them yourself. The other 12 skills have their example runs, not a scored test.
 
-**On real work, the picture is more mixed.** In one week I used the skills 11 times on my own product. None fired without being asked, all of them were older versions without my knowing, and the best finding of a five-skill chain came from the code, not the skill. `persona-pretest` found a real bug but tested only what I asked; `cross-industry-steal` produced an idea I rejected on sight. I rebuilt two of those moments as evals, and in both Claude without the skill did as well. What happened, skill by skill: [REAL-USE.md](REAL-USE.md).
+**On real work.** I used the skills 11 times on my own product in one week. Same pattern as the evals: the skills shaped the work (asking why before merging two pages, a scored comparison of the options, a persona walkthrough that found a real bug), while the key facts came from reading the product, and one "best idea" I rejected on sight. What happened, skill by skill: [REAL-USE.md](REAL-USE.md).
 
 ## The 16 skills, in the order you'd use them
 
