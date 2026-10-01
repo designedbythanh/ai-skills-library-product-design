@@ -1,43 +1,38 @@
 # How I tested design-critique-facilitator
 
-Three tests so far. For v1.2.0 and again for v1.3.0, I ran the skill 15 times on small made-up cases and Claude 15 times without it, to see where the skill actually changes the answer. For v1.1.0, I scored it against a redesign I had already made on a real product.
+## At a glance
 
-## v1.2.0: with and without the skill
+| Date | Test | Compared with Claude alone? | Result |
+|---|---|---|---|
+| 27 and 28 Sep 2026 | 5 small made-up cases, run on v1.2.0 then v1.3.0 | Yes, 6 runs each way | Same findings as Claude alone. The difference is how: it asks first (6 of 6 vs 1 of 6) and measures before praising (6 of 6 vs 3 of 6) |
+| 26 Sep 2026 | v1.0.0 vs v1.1.0, scored against a redesign I made on a real product | No | 9 of the 11 problems the redesign fixed (v1.0.0: 8), and it asked my intent first. Still praised two things it shouldn't have |
 
-**What changed.** v1.1.0 praised switch colors without measuring them. v1.2.0 has to check before it lists anything as working: for colors, it runs a small contrast script that ships with the skill ([`scripts/contrast.py`](scripts/contrast.py)) or computes the ratio itself. If it can't check something, it goes under "Not checked".
+How the tests are run, and the limits they all share: [`evals/`](../../evals/README.md).
 
-**How I tested it.** Five short, made-up cases in [`evals/`](../../evals/), with the colors written in the prompt. Each ran 3 times with the skill and 3 times without it, using `claude plugin eval` with Claude Opus 5.5 on 27 September 2026. Claude Sonnet graded each answer against criteria I wrote, and I read every answer that failed a criterion.
+## With and without the skill (v1.2.0 and v1.3.0)
+
+**What changed.** v1.1.0 praised switch colors without measuring them. v1.2.0 has to check before it lists anything as working: for colors, it runs a small contrast script that ships with the skill ([`scripts/contrast.py`](scripts/contrast.py)) or computes the ratio itself. If it can't check something, it goes under "Not checked". v1.3.0 then added context files and a "Next" line, so I ran the same cases again to check nothing broke.
+
+**How I tested it.** Five short, made-up cases in [`evals/`](../../evals/README.md), with the colors written in the prompt, on 27 September (v1.2.0) and 28 September 2026 (v1.3.0). Each round ran every case 3 times with the skill and 3 times without.
 
 | Case | With the skill | Without |
 |---|---|---|
-| Asks for my intent and what's decided before critiquing | 3 of 3 | 0 of 3 |
-| Lists a color as working only with a measured ratio | 3 of 3 | 0 of 3 |
-| Flags an off switch at 1.24:1 and hint text at 2.54:1 | 3 of 3 | 3 of 3 |
-| No false alarm when every color passes | 3 of 3 | 3 of 3 |
-| Keeps a banner I said was decided | 3 of 3 | 3 of 3 |
-| Stays out of a request that isn't a critique (a React bug) | Not used, 3 of 3 | n/a |
+| Asks for my intent and what's decided before critiquing | 6 of 6 | 1 of 6 |
+| Lists a color as working only with a measured ratio | 6 of 6 | 3 of 6 (all 3 in one round, none in the other) |
+| Flags an off switch at 1.24:1 and hint text at 2.54:1 | 6 of 6 | 6 of 6 |
+| No false alarm when every color passes | 6 of 6 | 6 of 6 |
+| Keeps a banner I said was decided | 6 of 6 | 6 of 6 |
+| Stays out of a request that isn't a critique (a React bug) | Not used, 6 of 6 | n/a |
 
-**What this shows.** Claude without the skill already catches bad contrast when it's given the colors, and it respects a decision when you say it's decided. The skill's difference is in how it works: it asks before it critiques, and it doesn't praise what it hasn't measured. That's narrower than I expected, and it's the part I care about most. Asking first is what keeps the critique tied to what I'm trying to do rather than to an old spec, which is where v1.0.0 slipped in the test below: it took the goal from the spec and didn't wait for an answer. And an unmeasured "this works" is the kind of mistake nobody catches later, because nobody rereads the praise.
+**What this shows.** Claude without the skill already catches bad contrast when it's given the colors, and it respects a decision when you say it's decided. The skill's difference is in how it works: it asks before it critiques, and it doesn't praise what it hasn't measured. That's narrower than I expected, and it's the part I care about most. Asking first is what keeps the critique tied to what I'm trying to do rather than to an old spec, which is where v1.0.0 slipped in the test below: it took the goal from the spec and didn't wait for an answer. And an unmeasured "this works" is the kind of mistake nobody catches later, because nobody rereads the praise. The measuring rule is less of a difference than the first round suggested: Claude alone gave ratios every time in the second round and never in the first. The skill does it every time.
 
-**The grader made mistakes.** Claude Sonnet marked two of the skill's answers as failing when they weren't. One listed every color with its ratio but was failed anyway. The other suggested a lighter row divider at 1.24:1 and said decorative dividers don't need 3:1, which is right, and was marked as a false alarm. In a first pilot, one criterion was worded so loosely that moving the banner lower on the same screen counted as removing it. I rewrote it before the full run. The table above uses my reading of those answers, not the grader's.
+**The grader made mistakes.** It failed four of the skill's answers that were right. One listed every color with its ratio. Three suggested a lighter row divider at 1.24:1 and said decorative dividers don't need 3:1, which is right, and were marked as false alarms. In a first pilot, one criterion was worded so loosely that moving the banner lower on the same screen counted as removing it. I rewrote these criteria. The table uses my reading.
+
+Every finished critique in the second round ended with the new "Next" line.
 
 **Run it yourself:** `claude plugin eval . --case 'critique-*' --runs 3 --allow-tools Bash`
 
-**Limits.** The cases are small and made up, with colors given as text, so the skill never had to find colors in a real design. One model, 3 runs per case. The grader is a model too, and it was wrong often enough that its score alone isn't enough.
-
-## v1.3.0: the same cases again
-
-v1.3.0 added context files and a "Next" line to every skill, so I re-ran the five critique cases on 28 September 2026 to check nothing broke. The skill scored the same. Claude without the skill did better on one row this time.
-
-| Case | With the skill (v1.2.0 run + v1.3.0 run) | Without |
-|---|---|---|
-| Asks for my intent and what's decided before critiquing | 6 of 6 | 1 of 6 |
-| Lists a color as working only with a measured ratio | 6 of 6 | 3 of 6 |
-| Flags the failing contrast, no false alarm on passing colors, keeps the decided banner | 6 of 6 each | 6 of 6 each |
-
-So the measuring rule is less of a difference than the first run suggested: without the skill, Claude gave ratios in all three runs this time and in none the time before. The skill does it every time. Asking first is still the clear difference.
-
-The grader again failed two of the skill's answers that were right: both suggested a lighter color for decorative row dividers, which the grader read as a false contrast alarm. I rewrote that criterion. Every finished critique also ended with the new "Next" line.
+**Limits.** The colors were given as text, so the skill never had to find them in a real design.
 
 ## v1.1.0: scored against a real redesign
 
@@ -132,11 +127,9 @@ I wrote v1.1.0 on 25 September, the day before these runs, after a real work ses
 
 I scored every finding by hand. A finding counted if it matched a problem on my list and pointed in a sound direction. "Real problems that weren't in my list" are ones I checked and agree with. "Already known" means the problem was in the dev review or the backlog, so the finding confirms rather than discovers. I left out findings caused by bugs in my own prototype (for example a menu button that does nothing, or a role check I got wrong), and generic ones such as "add a loading state" to a static prototype.
 
-The limits:
-- **One run per version per case.** The same prompt can give different output on another day.
-- **I built the case, wrote the answer key and scored the results.** Nobody else checked the scoring.
+The limits specific to this test (the ones shared by every test are in [`evals/`](../../evals/README.md)):
+- **One run per version.**
 - **The answer key is what the real redesign did.** That isn't proof it was right. A skill could disagree with it and have a point.
 - **Run 2 changed three things at once:** the skill version, my answers to its questions, and the two extra skills. That is why the results table only compares the critique itself.
 - **The runs used a draft of v1.1.0.** One label option ("design + dev" as an owner) was added after run 2.
 - **In run 1, the agent reviewed the page on its own before the skill loaded,** and the skill's output partly repeats that first reply.
-- **The prototype and the answer key stay private,** because the case is rebuilt from real work.

@@ -1,12 +1,20 @@
 # How I tested edge-case-finder
 
-Four tests so far. For v1.2.0 and again for v1.3.0, I ran the skill 15 times on small made-up cases and Claude 15 times without it. Before that, I scored one run against a redesign I had already made on a real product.
+## At a glance
 
-## v1.3.1: a bug that got past design, from real work
+| Date | Test | Compared with Claude alone? | Result |
+|---|---|---|---|
+| 1 Oct 2026 | A bug from real work, rebuilt as a case: changing scope while a save is running | Yes, 3 runs each way | Found every time, and so did Claude alone |
+| 27 and 28 Sep 2026 | 5 small made-up cases, run on v1.2.0 then v1.3.0 | Yes, 6 runs each way | Same findings as Claude alone. The difference: it asks or states the build stage (6 of 6 vs 0 of 6) |
+| 26 Sep 2026 | One run on a redesign I made on a real product | No | 4 real problems the critique missed. 5 of its 13 top items were prototype shortcuts, which led to the v1.2.0 change |
+
+How the tests are run, and the limits they all share: [`evals/`](../../evals/README.md).
+
+## A bug that got past design, from real work (v1.3.1)
 
 **What happened.** On a real settings page with an agency/client scope selector, a bug got through my design and my browser checks: if you changed the scope while a change was still saving, Undo could act on the wrong level, the other scope's value could show in the table, and a cell could stay locked. A developer caught it in code review and fixed it with five tests. My browser checks couldn't see it, because the mock data answered instantly, so there was never a moment "while saving". I asked whether `edge-case-finder` would have raised it at design time. This case answers that, rewritten as Northbeam: [`edge-06-scope-switch-mid-save`](../../evals/edge-06-scope-switch-mid-save/prompt.md).
 
-**How I tested it.** A spec-only description of the page, 3 runs with the skill and 3 without, `claude plugin eval` with Claude Opus 5.5 on 1 October 2026, graded by Claude Sonnet.
+**How I tested it.** A spec-only description of the page, 3 runs with the skill and 3 without, on 1 October 2026.
 
 | Criterion | With the skill | Without |
 |---|---|---|
@@ -15,46 +23,31 @@ Four tests so far. For v1.2.0 and again for v1.3.0, I ran the skill 15 times on 
 
 **What this shows.** Claude doesn't need the skill to find this one. Given the spec, it raised the case every time, with or without it. The bug didn't get through because the question was hard. It got through because nobody asked for an edge-case pass on that page before building it. The skill's value here is making that pass a habit, not finding something Claude couldn't.
 
-**Limits.** The prompt says that changing the scope reloads the table in place, which points toward the problem. A real spec might not say that. The skill raises the question; it can't check that the code handles it, and that took a code review and tests. One case, 3 runs per arm.
+**Limits.** The prompt says that changing the scope reloads the table in place, which points toward the problem. A real spec might not say that. The skill raises the question; it can't check that the code handles it, and that took a code review and tests.
 
-## v1.2.0: with and without the skill
+## With and without the skill (v1.2.0 and v1.3.0)
 
-**What changed.** In the first test, 5 of its 13 "fix before launch" items were shortcuts in my prototype. v1.2.0 asks what it's looking at (spec, prototype, staging or production). Cases that only exist because of a prototype shortcut get tagged "prototype only" and stay out of High priority, unless the build is going to production.
+**What changed.** In the first test, 5 of its 13 "fix before launch" items were shortcuts in my prototype. v1.2.0 asks what it's looking at (spec, prototype, staging or production). Cases that only exist because of a prototype shortcut get tagged "prototype only" and stay out of High priority, unless the build is going to production. v1.3.0 then added context files and a "Next" line, so I ran the same cases again.
 
-**How I tested it.** Five short, made-up cases in [`evals/`](../../evals/). Two describe the same invite feature with the same shortcuts (role read from the URL, a hard-coded team, a Send button that sends nothing): once as a prototype for user testing, once as a build shipping Monday. Each case ran 3 times with the skill and 3 times without it, using `claude plugin eval` with Claude Opus 5.5 on 27 September 2026. Claude Sonnet graded each answer against criteria I wrote, and I read every answer that failed a criterion.
+**How I tested it.** Five short, made-up cases in [`evals/`](../../evals/README.md), on 27 September (v1.2.0) and 28 September 2026 (v1.3.0). Two describe the same invite feature with the same shortcuts (role read from the URL, a hard-coded team, a Send button that sends nothing): once as a prototype for user testing, once as a build shipping Monday. Each round ran every case 3 times with the skill and 3 times without.
 
 | Case | With the skill | Without |
-|---|---|---|
-| Asks or states what's being reviewed, when I didn't say | 3 of 3 | 0 of 3 |
-| Prototype: doesn't rank the shortcuts as problems to fix | 3 of 3 | 2 of 3 |
-| Production: treats the same shortcuts as blockers | 3 of 3 | 3 of 3 |
-| Covers bad input, permissions, two things at once, outside failures and user behavior | 3 of 3 | 3 of 3 |
-| Stays out of a request that isn't about edge cases (a translation) | Not used, 3 of 3 | n/a |
-
-**What this shows.** Claude without the skill handles most of this well. Told it's a prototype, it usually sets the shortcuts aside by itself. The one run that "failed" put the fake Send button first, because it would ruin the user test: participants would all "succeed" without learning anything. That's a fair point, and I wouldn't count it against Claude. The clear difference is the first row: without the skill, Claude never asked or said what kind of build it was looking at. That matters when the stage isn't obvious from the prompt, which is most of the time on real work. In my first test, before this rule, I had to sort 5 prototype shortcuts out of a 13-item "fix before launch" list by hand.
-
-**My first graders were biased.** In the pilot, three criteria rewarded the skill's format (a "High priority" list, five named sections) instead of what the answer said. Claude without the skill failed them while saying the right things. I rewrote them to grade content before the full run.
-
-**Run it yourself:** `claude plugin eval . --case 'edge-*' --runs 3`
-
-**Limits.** Small made-up cases, described in text rather than a real build. One model, 3 runs per case. The grader is a model too.
-
-## v1.3.0: the same cases again
-
-v1.3.0 added context files and a "Next" line to every skill, so I re-ran the five edge-case cases on 28 September 2026. The skill passed every criterion again, and every finished answer ended with its "Next" line (pointing to `acceptance-criteria`).
-
-| Case | With the skill (v1.2.0 run + v1.3.0 run) | Without |
 |---|---|---|
 | Asks or states what's being reviewed, when I didn't say | 6 of 6 | 0 of 6 |
 | Prototype: doesn't rank the shortcuts as problems to fix | 6 of 6 | 5 of 6 |
 | Production: treats the same shortcuts as blockers | 6 of 6 | 6 of 6 |
-| Covers all five areas | 6 of 6 | 6 of 6 |
+| Covers bad input, permissions, two things at once, outside failures and user behavior | 6 of 6 | 6 of 6 |
+| Stays out of a request that isn't about edge cases (a translation) | Not used, 6 of 6 | n/a |
 
-This time the grader failed two of the answers without the skill that were right: one listed typos, duplicates and inviting someone already on the team as real cases, and one covered all five areas under its own headings. I counted both as passes. The difference is still the first row.
+**What this shows.** Claude without the skill handles most of this well. Told it's a prototype, it usually sets the shortcuts aside by itself. The one run that "failed" put the fake Send button first, because it would ruin the user test: participants would all "succeed" without learning anything. That's a fair point, and I wouldn't count it against Claude. The clear difference is the first row: without the skill, Claude never asked or said what kind of build it was looking at. That matters when the stage isn't obvious from the prompt, which is most of the time on real work. In my first test, before this rule, I had to sort 5 prototype shortcuts out of a 13-item "fix before launch" list by hand. Every finished answer in the second round ended with the "Next" line (pointing to `acceptance-criteria`).
+
+**The grader was biased, then wrong.** In the pilot, three criteria rewarded the skill's format (a "High priority" list, five named sections) instead of what the answer said, so Claude without the skill failed them while saying the right things. I rewrote them to grade content. In the second round, the grader failed two answers without the skill that were right: one listed typos, duplicates and inviting someone already on the team as real cases, and one covered all five areas under its own headings. I counted both as passes.
 
 In a separate case (see the [product-context eval](../product-context/EVAL.md)), the skill read the build stage from a brief instead of asking, and added its findings to the brief's Log.
 
-## First test: one scored run on a real redesign
+**Run it yourself:** `claude plugin eval . --case 'edge-*' --runs 3`
+
+## First test: one scored run on a real redesign (v1.1.0)
 
 I ran `edge-case-finder` once, on a page I had already redesigned for real, and scored what it found against that redesign. It listed 29 cases across all five kinds of failure (its own summary says 28), and reproduced 14 of them in a browser instead of guessing. Four of its findings were real problems the design critique had missed, including one the real redesign had noted and left open. Its weak spot: 5 of its 13 "fix before launch" items were shortcuts in my prototype, not design problems.
 
@@ -93,7 +86,7 @@ Its top pick, "The case I'd raise first", was the two-editor overwrite, because 
 
 ### What it got wrong
 
-**It couldn't tell my prototype's shortcuts from design problems.** (Addressed in v1.2.0, see above.) 5 of its 13 "fix before launch" items came from the prototype itself: two crashes, a locked field stuck off, recruiters able to edit, and the role read from the URL. It did flag the URL role as "fine in a prototype", but still ranked it high. On a real build, a developer would want these, so they're not wrong. But a designer reading the list has to sort them out by hand. The skill should ask what it's looking at (prototype, staging, production) and rank against that.
+**It couldn't tell my prototype's shortcuts from design problems.** (Fixed in v1.2.0, see above.) 5 of its 13 "fix before launch" items came from the prototype itself: two crashes, a locked field stuck off, recruiters able to edit, and the role read from the URL. It did flag the URL role as "fine in a prototype", but still ranked it high. On a real build, a developer would want these, so they're not wrong. But a designer reading the list has to sort them out by hand. The skill should ask what it's looking at (prototype, staging, production) and rank against that.
 
 ### If you use this skill
 
@@ -103,8 +96,5 @@ Its top pick, "The case I'd raise first", was the two-editor overwrite, because 
 
 ### Limits
 
-- One run, on one case. The same prompt can give different output on another day.
+- One run, with no run without the skill to compare.
 - It ran after the critique, so the findings aren't independent of it.
-- No run without the skill in this first test. The v1.2.0 test above adds that comparison.
-- I built the case, wrote the answer key and scored the results.
-- The prototype and the answer key stay private, because the case is rebuilt from real work.

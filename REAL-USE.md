@@ -11,17 +11,27 @@ The evals in [`evals/`](evals/) use small made-up cases. This page is the other 
 
 ## One question, five skills: should two settings pages become one?
 
-Northbeam has two settings pages: one where the agency keeps its value lists (Skills, Seniority, Source channel...) and one where it switches each field on or off per hiring stage. I asked whether to merge them. Claude proposed a chain, and I followed it over about an hour.
+Northbeam has two settings pages: one where the agency keeps its value lists (Skills, Seniority, Source channel...) and one where it switches each field on or off per hiring stage. I asked whether to merge them. Claude proposed a chain, and I followed it over about an hour, in this order.
 
-**1. `five-whys-root-cause`: why merge?** My trigger: creating a field on one page, then going to the other to switch it on, felt like two trips. The key fact didn't come from the five whys. It came from the code: a new field was **already switched on** in the two stages where it's usually needed. The second trip existed because nothing said so. That turned "merge the pages" into cheaper options: ask where the field shows when you create it, show where it shows in its drawer, and link the two pages.
+### five-whys-root-cause
 
-**2. `decision-rationale`: two pages with links (A) or one page (B)?** First real run of this skill. B scored 39, A 33, on five criteria weighted equally. One of the five was scope safety: definitions are agency-wide, visibility can change per client, and mixing the two on one page had caused a real incident before. It scored 8 against 7, worth no more than "delivery cost". In hindsight, a rule tied to a past incident is a condition to meet, not one score among five. The outcome: I leaned to B but took it to the team, because it's a product change. No decision yet.
+**Why merge?** My trigger: creating a field on one page, then going to the other to switch it on, felt like two trips. The key fact didn't come from the five whys. It came from the code: a new field was **already switched on** in the two stages where it's usually needed. The second trip existed because nothing said so. That turned "merge the pages" into cheaper options: ask where the field shows when you create it, show where it shows in its drawer, and link the two pages.
 
-**3. `cross-industry-steal`: how do lists stay findable inside one long table?** Three examples (restaurant menus printing the side options under a dish, accounting control accounts, information scent). The "best steal" turned the pricing list (fee models) into a flagged row of the table, like a control account in a ledger. Claude built it. When I opened it, I rejected it: fee models are pricing rules, not a column, so they don't belong among the fields. The steal copied the shape of the example, not just its mechanism.
+### decision-rationale
 
-**4. `persona-pretest`: does someone still find the lists?** The persona, an agency ops lead who keeps lists in Excel, found **a real bug on the existing page**: a new fee model gets a default unit nobody chose, so it would be saved wrong. That was worth the run on its own. But it tested what I asked (findability) and missed what I saw in a minute on the same screen: rows that didn't say what kind of field they were, an icon nobody explained, and a "New field" form that couldn't take values or stages. Details in the [persona-pretest eval](skills/persona-pretest/EVAL.md).
+**Two pages with links (A) or one page (B)?** First real run of this skill. B scored 39, A 33, on five criteria weighted equally. One of the five was scope safety: definitions are agency-wide, visibility can change per client, and mixing the two on one page had caused a real incident before. It scored 8 against 7, worth no more than "delivery cost". In hindsight, a rule tied to a past incident is a condition to meet, not one score among five. The outcome: I leaned to B but took it to the team, because it's a product change. No decision yet.
 
-**5. `design-critique-facilitator`, twice.** It confirmed my own worry with measurements: the filter control was 44px tall next to a 32px search field and button. It also measured three elements below the contrast they need (1.91, 2.60 and 4.12 to 1: a warning line, a drag handle, unselected filter options) and proposed fixes. At the end of the session, Claude went back over its own recommendations and found several it had made and never applied. Version 1.3.0's Log and "Next" line exist for that, but they weren't in the version that ran.
+### cross-industry-steal
+
+**How do lists stay findable inside one long table?** Three examples (restaurant menus printing the side options under a dish, accounting control accounts, information scent). The "best steal" turned the pricing list (fee models) into a flagged row of the table, like a control account in a ledger. Claude built it. When I opened it, I rejected it: fee models are pricing rules, not a column, so they don't belong among the fields. The steal copied the shape of the example, not just its mechanism.
+
+### persona-pretest
+
+**Does someone still find the lists?** The persona, an agency ops lead who keeps lists in Excel, found **a real bug on the existing page**: a new fee model gets a default unit nobody chose, so it would be saved wrong. That was worth the run on its own. But it tested what I asked (findability) and missed what I saw in a minute on the same screen: rows that didn't say what kind of field they were, an icon nobody explained, and a "New field" form that couldn't take values or stages. Details in the [persona-pretest eval](skills/persona-pretest/EVAL.md).
+
+### design-critique-facilitator
+
+**Twice, on the merged page.** It confirmed my own worry with measurements: the filter control was 44px tall next to a 32px search field and button. It also measured three elements below the contrast they need (1.91, 2.60 and 4.12 to 1: a warning line, a drag handle, unselected filter options) and proposed fixes. At the end of the session, Claude went back over its own recommendations and found several it had made and never applied. Version 1.3.0's Log and "Next" line exist for that, but they weren't in the version that ran.
 
 ## What I take from it
 

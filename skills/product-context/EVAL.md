@@ -32,4 +32,4 @@ The critique row is a tie, and it's worth being clear about why. Given a request
 - Five small made-up cases, 3 runs each. The files were short and written in one go.
 - It doesn't test a long project, where the brief and Log grow over weeks and could go stale.
 - Only three of the sixteen "Next" lines showed up in the test runs: `prd-first-draft`, `edge-case-finder` and `design-critique-facilitator` ended every finished answer with theirs. The rest follow from what each skill produces and needs, not from a test.
-- The grader is a model, and it was wrong often enough that its score alone isn't enough.
+- The limits shared by every test are in [`evals/`](../../evals/README.md).
