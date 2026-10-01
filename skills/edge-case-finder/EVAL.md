@@ -1,6 +1,21 @@
 # How I tested edge-case-finder
 
-Three tests so far. For v1.2.0 and again for v1.3.0, I ran the skill 15 times on small made-up cases and Claude 15 times without it. Before that, I scored one run against a redesign I had already made on a real product.
+Four tests so far. For v1.2.0 and again for v1.3.0, I ran the skill 15 times on small made-up cases and Claude 15 times without it. Before that, I scored one run against a redesign I had already made on a real product.
+
+## v1.3.1: a bug that got past design, from real work
+
+**What happened.** On a real settings page with an agency/client scope selector, a bug got through my design and my browser checks: if you changed the scope while a change was still saving, Undo could act on the wrong level, the other scope's value could show in the table, and a cell could stay locked. A developer caught it in code review and fixed it with five tests. My browser checks couldn't see it, because the mock data answered instantly, so there was never a moment "while saving". I asked whether `edge-case-finder` would have raised it at design time. This case answers that, rewritten as Northbeam: [`edge-06-scope-switch-mid-save`](../../evals/edge-06-scope-switch-mid-save/prompt.md).
+
+**How I tested it.** A spec-only description of the page, 3 runs with the skill and 3 without, `claude plugin eval` with Claude Opus 5.5 on 1 October 2026, graded by Claude Sonnet.
+
+| Criterion | With the skill | Without |
+|---|---|---|
+| Names a scope change during a save, undo or reset, and what goes wrong | 3 of 3 | 3 of 3 |
+| Ties each request to the scope it was sent from (drop late answers, bind Undo to its level, or hold the switch) | 3 of 3 | 3 of 3 |
+
+**What this shows.** Claude doesn't need the skill to find this one. Given the spec, it raised the case every time, with or without it. The bug didn't get through because the question was hard. It got through because nobody asked for an edge-case pass on that page before building it. The skill's value here is making that pass a habit, not finding something Claude couldn't.
+
+**Limits.** The prompt says that changing the scope reloads the table in place, which points toward the problem. A real spec might not say that. The skill raises the question; it can't check that the code handles it, and that took a code review and tests. One case, 3 runs per arm.
 
 ## v1.2.0: with and without the skill
 

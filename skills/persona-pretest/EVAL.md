@@ -2,7 +2,29 @@
 
 I ran `persona-pretest` once, on a page I had already redesigned for real, and compared what it found with that redesign. In 51 seconds it walked a fictional account manager through one task. Its top 3 fixes match 3 changes the real redesign made. It also found one problem I hadn't listed, and it showed why a problem the critique had only named mattered: the persona nearly wiped a client's existing setup.
 
-This is a scored run, not a comparison. There is only one version of this skill, and I didn't run it without the skill to compare.
+The first test below is a scored run, not a comparison. The second, from real work, compares it with Claude alone.
+
+## v1.3.1: what it misses when the question is narrow, from real work
+
+**What happened.** On my real product, I asked the skill whether people would still find value lists and pricing settings after merging two settings pages into one table. The persona answered that question well, and found a real bug on the existing page: a new pricing entry got a default unit nobody chose. But it missed three things I saw in a minute on the same screen: the pricing settings sat in a table of fields where they didn't belong, the rows didn't say what kind of field each was, and the "New field" form couldn't take values or stages. That run used an old version of the skill. This case rebuilds it as Northbeam: [`persona-01-concept-model`](../../evals/persona-01-concept-model/prompt.md), with the same narrow question ("do people still find the lists and the fee models?").
+
+**How I tested it.** 3 runs with the skill and 3 without, `claude plugin eval` with Claude Opus 5.5 on 1 October 2026, graded by Claude Sonnet. I read all six answers.
+
+| Criterion | With the skill | Without |
+|---|---|---|
+| Notes that "New field" can't take values or stages | 3 of 3 | 3 of 3 |
+| Questions whether fee models belong among the fields (grader) | 2 of 3 | 3 of 3 |
+| ...and proposes giving them a place outside the field rows (my reading) | 1 of 3 | 1 of 3 |
+| Shows the persona unsure what kind of thing some rows are (grader) | 2 of 3 | 2 of 3 |
+| ...asks what a specific row like "Req ID" or "Margin" is (my reading) | 0 of 3 | 0 of 3 |
+
+**What this shows.** No advantage for the skill in this case. With or without it, Claude caught the incomplete form every time and voiced the persona's sense that fees are "money, not fields", but mostly answered my question as asked: make the Fee row easier to find, rather than take it out of the table. On my real page, the fix was a separate tab. The best single idea came from a run without the skill: Sam creating a "Day rate" *field* instead of a fee model, a wrong path that looks like success.
+
+The grader was more lenient than I meant: it passed answers that mentioned money without questioning the table. So I added my own stricter reading in the rows marked "my reading".
+
+**If you use this skill:** ask what the page is for, not only whether one thing is findable. Before the tasks, have the persona say what they think the page is and what each kind of row is. That's not in the skill yet; I'd need to test it first.
+
+**Limits.** One case, 3 runs per arm, described in text. My first single run with the skill on this case scored 2 of 4 criteria. I wrote the case knowing what was missed in real life.
 
 ## The test
 

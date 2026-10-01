@@ -9,7 +9,10 @@
 - 2 new cases rewritten from real sessions (neutral Northbeam case):
   - [`edge-06-scope-switch-mid-save`](evals/edge-06-scope-switch-mid-save/prompt.md): a settings page with an agency/client scope selector. Does the skill ask what happens when the scope changes while a save is still running? That bug shipped once and was caught in review.
   - [`persona-01-concept-model`](evals/persona-01-concept-model/prompt.md): a merged "Fields" page. Does the persona question what each row is, and whether fee models belong in a table of fields, or only test what it was asked to find? In the real session it only tested findability, and the designer caught the concept problems.
-- First single run with the plugin: edge-06 3/3 graders, persona-01 2/4 (both misses read by hand and confirmed). Not yet run 3 times or against Claude without the plugin.
+- Results (3 runs with the plugin, 3 without): no advantage for the skills on either case. edge-06: 3/3 with and without. persona-01: Claude without the skill did as well or slightly better. Details in the [edge-case-finder](skills/edge-case-finder/EVAL.md) and [persona-pretest](skills/persona-pretest/EVAL.md) evals.
+
+### Docs
+- [REAL-USE.md](REAL-USE.md): what happened when I used the skills on real work for a week, including a five-skill chain, what each skill found and missed, and why none of them fired on their own.
 
 ### Repo
 - CI checks that every skill's version matches the plugin's.
