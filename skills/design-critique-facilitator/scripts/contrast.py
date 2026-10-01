@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2026 Thanh Nguyen
 """WCAG 2.x contrast ratio between two colors.
 
 Usage: python3 contrast.py FOREGROUND BACKGROUND [FOREGROUND BACKGROUND ...]

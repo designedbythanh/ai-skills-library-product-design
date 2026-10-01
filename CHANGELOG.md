@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.3.2 · 2026-10-01
+
+### Skills
+- Plainer descriptions for `acceptance-criteria`, `experiment-design` and `design-scope-negotiator` (dropped "airtight", "statistically-honest", "opinionated"). Re-tested: all 16 skills still get picked on their own from their example prompts (16 of 16).
+
+### Docs
+- New [`edge-case-finder` example](skills/edge-case-finder/EXAMPLE.md), run on v1.3.2. The other examples now say which version they ran on and what has changed since.
+- README: how each skill is built now includes the context files and the "Next" line.
+
+### License
+- The code (`scripts/` folders) is now [MIT](LICENSE-CODE). The skills and docs stay CC BY 4.0.
+
 ## 1.3.1 · 2026-10-01
 
 ### All skills
@@ -9,7 +21,7 @@
 - 2 new cases rewritten from real sessions (neutral Northbeam case):
   - [`edge-06-scope-switch-mid-save`](evals/edge-06-scope-switch-mid-save/prompt.md): a settings page with an agency/client scope selector. Does the skill ask what happens when the scope changes while a save is still running? That bug shipped once and was caught in review.
   - [`persona-01-concept-model`](evals/persona-01-concept-model/prompt.md): a merged "Fields" page. Does the persona question what each row is, and whether fee models belong in a table of fields, or only test what it was asked to find? In the real session it only tested findability, and the designer caught the concept problems.
-- Results (3 runs with the plugin, 3 without): no advantage for the skills on either case. edge-06: 3/3 with and without. persona-01: Claude without the skill did as well or slightly better. Details in the [edge-case-finder](skills/edge-case-finder/EVAL.md) and [persona-pretest](skills/persona-pretest/EVAL.md) evals.
+- Results (3 runs with the plugin, 3 without): no advantage for the skills on either case. edge-06: 3/3 with and without. persona-01: Claude without the skill did as well (one grader judgment apart out of nine, read as a tie). Details in the [edge-case-finder](skills/edge-case-finder/EVAL.md) and [persona-pretest](skills/persona-pretest/EVAL.md) evals.
 
 ### Docs
 - [REAL-USE.md](REAL-USE.md): what happened when I used the skills on real work for a week, including a five-skill chain, what each skill found and missed, and why none of them fired on their own.

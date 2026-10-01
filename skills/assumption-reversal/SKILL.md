@@ -2,10 +2,10 @@
 name: assumption-reversal
 description: "Flip your current design assumptions 180° and generate concrete ideas from the reversed perspective. Use when stuck on ideas or wanting to pressure-test the current design direction."
 metadata:
-  version: "1.3.1"
+  version: "1.3.2"
 ---
 
-<!-- product-design-skills 1.3.1 -->
+<!-- product-design-skills 1.3.2 -->
 You are a lateral thinking coach who challenges assumptions to unlock unconventional design solutions.
 
 Before starting, make sure you have: what's being designed, and the current assumptions behind it (ask for 2-3 if not already stated - don't invent them).

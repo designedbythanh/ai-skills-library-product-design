@@ -1,6 +1,6 @@
 # AI Skills Library for Product & Design Teams
 
-16 AI skills for product designers and product managers, from understanding a problem to reading the results after launch. Each skill is a short set of instructions your AI tool follows for one job: critiquing a design, finding edge cases, writing acceptance criteria. They ask for the context they need instead of guessing, and each one comes with a real, unedited run you can read before trying it.
+16 AI skills for product designers and product managers, from understanding a problem to reading the results after launch. Each skill is a short set of instructions your AI tool follows for one job: critiquing a design, finding edge cases, writing acceptance criteria. They ask for the context they need instead of guessing, and each one comes with a real run you can read before trying it.
 
 by [Thanh Nguyen](https://www.linkedin.com/in/thanh2-nguyen/) · Product Designer, AI-native workflows · [Substack](https://designedbythanh.substack.com) · [Notion templates](https://www.notion.com/@thanh-nguyen)
 
@@ -33,7 +33,7 @@ Every skill has an example like this next to it, run in Claude Code on a fiction
 | **After it ships** | [`experiment-design`](skills/experiment-design/SKILL.md) | Plans an A/B test with a decision rule, and says when traffic is too low to trust the result | [Example](skills/experiment-design/EXAMPLE.md) |
 | | [`data-interpretation`](skills/data-interpretation/SKILL.md) | Separates what the numbers show from the explanation, and rules out other causes before acting | [Example](skills/data-interpretation/EXAMPLE.md) |
 
-Two skills sit later than you might expect. `success-metrics-definition` belongs right after the spec, not at the end, and `design-scope-negotiator` comes in under deadline pressure, not right after ideas. In testing, Claude often suggested the next skill in this order on its own, for example offering `acceptance-criteria` after a `prd-first-draft`.
+Two skills sit later than you might expect. `success-metrics-definition` belongs right after the spec, not at the end, and `design-scope-negotiator` comes in under deadline pressure, not right after ideas.
 
 ## Does it work?
 
@@ -62,10 +62,12 @@ Two chains have been run so far: `design-critique-facilitator`, then `edge-case-
 
 ## How each skill is built
 
-Each skill is one `SKILL.md` file with four parts:
+Each skill is one `SKILL.md` file with six parts:
 - **When to use it**, so your AI tool knows when to reach for it.
 - **What to ask before starting.** If the context is missing, it asks instead of guessing.
+- **Context files.** It reads `PRODUCT.md` and the feature's brief first, if they exist, and only asks for what's missing.
 - **The output format**, so results look the same every time.
+- **A handoff.** It ends with a "Next" line naming the skill that usually follows, and adds a dated entry to the brief's Log when it can write files.
 - **One hard rule** the output must follow, so it doesn't drift into generic filler. In the files it's called *Exigence*, French for "requirement". For example, `edge-case-finder` must cover all five kinds of failure every time, and say so when one has nothing to report.
 
 ## Install
@@ -113,4 +115,4 @@ Used a skill on real work? [Tell me how it went](https://github.com/designedbyth
 
 ## License
 
-[CC BY 4.0](LICENSE). Use, adapt and share freely, including commercially, with attribution.
+The skills and docs are [CC BY 4.0](LICENSE): use, adapt and share freely, including commercially, with attribution. The code (the `scripts/` folders) is [MIT](LICENSE-CODE).

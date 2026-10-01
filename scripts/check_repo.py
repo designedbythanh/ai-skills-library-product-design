@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2026 Thanh Nguyen
 """Repo checks run in CI: manifests, skill files, internal links, lists that must name every skill.
 
 Run from the repo root: python3 scripts/check_repo.py

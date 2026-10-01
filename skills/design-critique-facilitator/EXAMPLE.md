@@ -2,6 +2,7 @@
 
 > Real output from Claude Code (Claude Opus 5.5), run on 2026-09-26 with the v1.1.0 draft of this skill installed. The output is unedited. The scenario is fictional.
 > The prompt doesn't name the skill: Claude recognized the situation and used it on its own.
+> Since then, it lists something as working only after checking it (v1.2.0), and reads `PRODUCT.md` and the brief first and ends with a "Next" line (v1.3.0).
 > Same prompt as the [v1.0.0 example](https://github.com/designedbythanh/ai-skills-library-product-design/blob/v1.0.0/skills/design-critique-facilitator/EXAMPLE.md), so the two can be compared ([eval](EVAL.md)). Two accidental pastes (the launch command, and the answers sent a second time) are left out. After this run, the owner tag gained a fourth value, "design + dev".
 
 **What to notice:**
