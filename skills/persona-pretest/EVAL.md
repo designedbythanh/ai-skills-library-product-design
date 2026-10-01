@@ -18,7 +18,9 @@ The first test below is a scored run, not a comparison. The second, from real wo
 | Shows the persona unsure what kind of thing some rows are (grader) | 2 of 3 | 2 of 3 |
 | ...asks what a specific row like "Req ID" or "Margin" is (my reading) | 0 of 3 | 0 of 3 |
 
-**What this shows.** No advantage for the skill in this case. With or without it, Claude caught the incomplete form every time and voiced the persona's sense that fees are "money, not fields", but mostly answered my question as asked: make the Fee row easier to find, rather than take it out of the table. On my real page, the fix was a separate tab. The best single idea came from a run without the skill: Sam creating a "Day rate" *field* instead of a fee model, a wrong path that looks like success.
+**What this shows.** No advantage for the skill in this case. With or without it, Claude caught the incomplete form every time and voiced the persona's sense that fees are "money, not fields", but mostly answered my question as asked: make the Fee row easier to find, rather than take it out of the table. On my real page, the fix was a separate tab. The best single idea showed up in one run of each arm: Sam creating a "Day rate" *field* instead of a fee model, a wrong path that looks like success.
+
+The gap in the grader rows (2 vs 3) is one judgment out of nine, on a lenient grader, and the judges split on two of the runs. With 3 runs per arm, I read it as a tie, not as the skill doing worse. One real difference in shape: with the skill, every answer stayed in the step-by-step persona format and ended with exactly 3 fixes; without it, two answers listed 8 or 9 recommendations, including a separate way into fee models from outside the table. The skill's "Top 3" keeps the list short, which can also drop a useful fix.
 
 The grader was more lenient than I meant: it passed answers that mentioned money without questioning the table. So I added my own stricter reading in the rows marked "my reading".
 
