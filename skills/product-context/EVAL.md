@@ -1,5 +1,15 @@
 # How I tested product-context
 
+## At a glance
+
+| Date | Test | Compared with Claude alone? | Result |
+|---|---|---|---|
+| 28 Sep 2026 | 5 small made-up cases for the shared files, the Log and the "Next" line | Yes, 3 runs each way | Files, Log and "Next" line written every time with the plugin, never without. A critique with a brief ties Claude alone: the brief saves a round of questions, not quality |
+
+How the tests are run, and the limits they all share: [`evals/`](../../evals/README.md).
+
+## The test
+
 `product-context` is new in v1.3.0, together with the shared files it writes and the "Next" line every skill now ends with. I tested the whole mechanism, not just this skill: five small made-up cases in [`evals/`](../../evals/), each run 3 times with the plugin and 3 times without it, using `claude plugin eval` with Claude Opus 5.5 on 28 September 2026. Claude Sonnet graded each answer against criteria I wrote, and I read every answer that failed a criterion.
 
 ## Results

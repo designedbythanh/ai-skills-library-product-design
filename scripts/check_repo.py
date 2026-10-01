@@ -6,8 +6,10 @@
 Run from the repo root: python3 scripts/check_repo.py
 """
 import json
+import os
 import re
 import sys
+import urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -77,6 +79,67 @@ for md in ROOT.rglob("*.md"):
         path = (md.parent / target.split("#")[0]).resolve()
         if not path.exists():
             err(f"{md.relative_to(ROOT)}: broken link '{target}'")
+
+# The checks below each come from a mistake that reached the public repo once.
+
+# Skill counts written in prose match the number of skill folders.
+count_re = r"\b(\d+) (?:structured )?(?:AI )?skills\b"
+for path in ["README.md", ".claude-plugin/plugin.json", ".claude-plugin/marketplace.json"]:
+    for n in re.findall(count_re, (ROOT / path).read_text()):
+        if int(n) != len(skills):
+            err(f"{path}: says {n} skills, there are {len(skills)}")
+
+# Every example says which version it ran on, in its header.
+for name in skills:
+    example = ROOT / "skills" / name / "EXAMPLE.md"
+    header = "\n".join(example.read_text().splitlines()[:8]) if example.exists() else ""
+    if example.exists() and not re.search(r"run on \d{4}-\d{2}-\d{2} [^.\n]*?v\d+\.\d+\.\d+", header):
+        err(f"skills/{name}/EXAMPLE.md: header doesn't say which version it ran on")
+
+# Every eval page starts with its at-a-glance table.
+for page in sorted((ROOT / "skills").glob("*/EVAL.md")):
+    if "## At a glance" not in page.read_text():
+        err(f"{page.relative_to(ROOT)}: no '## At a glance' section")
+
+# The changelog has an entry for the current version.
+changelog = (ROOT / "CHANGELOG.md").read_text()
+if not re.search(rf"^## {re.escape(str(plugin.get('version')))} ", changelog, re.M):
+    err(f"CHANGELOG.md: no entry for {plugin.get('version')}")
+
+# Every "N of M" result in the README appears in an eval page.
+eval_text = "\n".join(p.read_text() for p in (ROOT / "skills").glob("*/EVAL.md"))
+for claim in sorted(set(re.findall(r"\b\d+ of \d+\b", readme))):
+    if claim not in eval_text:
+        err(f"README.md: '{claim}' isn't in any EVAL.md")
+# A "with, against without" pair must sit on one line of an eval table, in that order.
+for with_, without in re.findall(r"\b(\d+ of \d+)(?: runs)?, against (\d+ of \d+)", readme):
+    if not re.search(rf"{with_}[^\n]*\|[^\n]*{without}", eval_text):
+        err(f"README.md: '{with_}, against {without}' isn't a row in any EVAL.md")
+
+# Every eval case is listed in evals/README.md, by name or inside a "`a-01` to `a-05`" range.
+evals_readme = (ROOT / "evals/README.md").read_text()
+ranges = re.findall(r"`([a-z]+)-(\d+)` to `\1-(\d+)`", evals_readme)
+for case in sorted(p.name for p in (ROOT / "evals").iterdir() if p.is_dir() and p.name != "results"):
+    m = re.match(r"([a-z]+)-(\d+)", case)
+    named = f"`{m.group(0)}`" in evals_readme if m else case in evals_readme
+    in_range = bool(m) and any(m.group(1) == p and int(a) <= int(m.group(2)) <= int(b) for p, a, b in ranges)
+    if not (named or in_range):
+        err(f"evals/README.md doesn't list {case}")
+
+# On GitHub (CI only, needs the network): the repo description and the profile README give the same count.
+if os.environ.get("GITHUB_ACTIONS") or os.environ.get("CHECK_GITHUB"):
+    for label, url, key in [
+        ("repo description", "https://api.github.com/repos/designedbythanh/ai-skills-library-product-design", "description"),
+        ("profile README", "https://raw.githubusercontent.com/designedbythanh/designedbythanh/main/README.md", None),
+    ]:
+        try:
+            body = urllib.request.urlopen(url, timeout=15).read().decode()
+            text = json.loads(body).get(key) or "" if key else body
+            for n in re.findall(count_re, text):
+                if int(n) != len(skills):
+                    err(f"GitHub {label}: says {n} skills, there are {len(skills)}")
+        except OSError as e:
+            err(f"GitHub {label}: couldn't fetch ({e})")
 
 if errors:
     print("\n".join(f"✗ {e}" for e in errors))
