@@ -1,6 +1,6 @@
 # Example: product-context
 
-> Real output from Claude Code (Claude Opus 5.5), run on 2026-09-28 with `claude -p` and this plugin loaded. The output and both files are unedited. The scenario is fictional.
+> Real output from Claude Code (Claude Opus 5.5), run on 2026-09-28 with `claude -p` and v1.3.0 of this plugin loaded. Nothing in this skill has changed since. The output and both files are unedited. The scenario is fictional.
 > The prompt doesn't name the skill: Claude recognized the situation and used it on its own.
 
 **What to notice:**
