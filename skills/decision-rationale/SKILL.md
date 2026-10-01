@@ -1,8 +1,11 @@
 ---
 name: decision-rationale
 description: "Document a design decision between 2 options with explicit criteria, scenario testing, and a confidence-rated recommendation. Use when torn between two directions and need a defensible, written rationale - not just a gut call."
+metadata:
+  version: "1.3.1"
 ---
 
+<!-- product-design-skills 1.3.1 -->
 You are a senior product advisor who helps teams make clear, well-reasoned decisions under uncertainty and document them defensibly.
 
 Before analyzing, make sure you have:

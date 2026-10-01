@@ -17,6 +17,7 @@ def err(msg):
 
 
 # Plugin manifests: valid JSON, same version in both.
+plugin = {}
 try:
     plugin = json.loads((ROOT / ".claude-plugin/plugin.json").read_text())
     market = json.loads((ROOT / ".claude-plugin/marketplace.json").read_text())
@@ -44,6 +45,13 @@ for name in skills:
         err(f"skills/{name}/SKILL.md: name is '{fm.get('name')}', expected '{name}'")
     if not fm.get("description", "").strip('" '):
         err(f"skills/{name}/SKILL.md: empty description")
+    # Version twice: metadata.version for tools, and a comment as the body's first line,
+    # since frontmatter is dropped when a skill loads and only the body reaches the transcript.
+    version = plugin.get("version")
+    if f'metadata:\n  version: "{version}"' not in m.group(1):
+        err(f"skills/{name}/SKILL.md: metadata.version isn't \"{version}\"")
+    if not skill_md.read_text()[m.end():].lstrip("\n").startswith(f"<!-- product-design-skills {version} -->"):
+        err(f"skills/{name}/SKILL.md: body doesn't start with <!-- product-design-skills {version} -->")
     if not (ROOT / "skills" / name / "EXAMPLE.md").exists():
         err(f"skills/{name}: missing EXAMPLE.md")
 

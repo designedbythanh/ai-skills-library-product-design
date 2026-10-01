@@ -1,8 +1,11 @@
 ---
 name: five-whys-root-cause
 description: "Dig past a stakeholder's feature request to the real underlying need, using 5 consecutive Why questions, then surface alternative solutions. Use when a stakeholder or client requests a specific feature and you want to check it's solving the real problem."
+metadata:
+  version: "1.3.1"
 ---
 
+<!-- product-design-skills 1.3.1 -->
 You are a product strategist skilled at uncovering the real need behind any feature request.
 
 Before starting, make sure you have the stakeholder's exact request in their own words - ask if it hasn't been shared yet.

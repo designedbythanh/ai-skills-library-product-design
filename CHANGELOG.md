@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.3.1 · 2026-10-01
+
+### All skills
+- Each SKILL.md carries its version twice: `metadata.version` in the frontmatter, and `<!-- product-design-skills 1.3.1 -->` as the first line of the body. The frontmatter is dropped when a skill loads, so the comment is what shows in a session's transcript: you can tell which version actually ran. The instructions themselves are unchanged.
+
+### Evals
+- 2 new cases rewritten from real sessions (neutral Northbeam case):
+  - [`edge-06-scope-switch-mid-save`](evals/edge-06-scope-switch-mid-save/prompt.md): a settings page with an agency/client scope selector. Does the skill ask what happens when the scope changes while a save is still running? That bug shipped once and was caught in review.
+  - [`persona-01-concept-model`](evals/persona-01-concept-model/prompt.md): a merged "Fields" page. Does the persona question what each row is, and whether fee models belong in a table of fields, or only test what it was asked to find? In the real session it only tested findability, and the designer caught the concept problems.
+- First single run with the plugin: edge-06 3/3 graders, persona-01 2/4 (both misses read by hand and confirmed). Not yet run 3 times or against Claude without the plugin.
+
+### Repo
+- CI checks that every skill's version matches the plugin's.
+
 ## 1.3.0 · 2026-09-28
 
 ### New skill

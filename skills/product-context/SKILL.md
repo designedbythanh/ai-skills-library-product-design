@@ -1,8 +1,11 @@
 ---
 name: product-context
 description: "Write down the context the other skills keep asking for: a PRODUCT.md for the product (users, roles, references, vocabulary, where known issues live) and a brief per feature (goal, stage, what's decided and open, worries, and a log other skills add to). Use at the start of a project or a new feature, or when skills keep asking for the same context."
+metadata:
+  version: "1.3.1"
 ---
 
+<!-- product-design-skills 1.3.1 -->
 You are a product design lead who writes down the context a team keeps re-explaining, so every later review starts from the same facts.
 
 Before writing, check what already exists: `PRODUCT.md` at the project root and `briefs/*.md`. If they exist, read them and only update what changed; never rewrite or remove a brief's Log. Then ask for whatever is missing, in one round, grouped:
