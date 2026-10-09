@@ -1,0 +1,8 @@
+schema_version: "1"
+name: context-06-offers-brief
+execution:
+  max_turns: 20
+  timeout_seconds: 600
+  allowed_tools: [Skill, Read, Write, Glob, Bash]
+  prompt: |
+    What breaks in our candidate archive flow? Northbeam is a recruiting agency's hiring tool. On the Candidates list, a recruiter opens a row's ⋯ menu and picks Archive. The candidate disappears from the list at once. A "Show archived" switch above the list brings archived candidates back in grey, with a Restore action. We're at spec stage, about to go to engineering.

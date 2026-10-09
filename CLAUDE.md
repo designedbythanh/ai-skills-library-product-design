@@ -39,6 +39,13 @@ Run it over the whole repo, not only the files you touched.
 4. Tag, then build one zip per skill (without EXAMPLE.md and EVAL.md) plus `all-skills.zip`, same layout as the previous release. Publish the release with "How to update" notes.
 5. Don't name a branch the same as a tag.
 
+## The context contract
+
+[`CONTEXT-CONTRACT.md`](CONTEXT-CONTRACT.md) is what every skill reads and `product-context` writes. The [Knowledge System](https://github.com/designedbythanh/product-design-knowledge-system) implements it.
+
+- Changing a role, heading, marker or rule there is a contract change: bump `<!-- context-contract X.Y -->`, update `product-context` and the shared "Context files" paragraph in the other skills, and update the Knowledge System (templates, Northbeam example, the "Implements context contract" line) before merging here. CI checks the Knowledge System's `main` and fails until it matches.
+- To check a local Knowledge System clone before pushing it: `CHECK_KS=1 KS_PATH=../product-design-knowledge-system python3 scripts/check_repo.py`.
+
 ## Evals
 
 See [`evals/README.md`](evals/README.md). Read every failed criterion yourself before reporting a number: the grader has been wrong in most rounds.

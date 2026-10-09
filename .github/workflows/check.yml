@@ -4,6 +4,9 @@ on:
   push:
     branches: [main]
   pull_request:
+  schedule:
+    # Weekly, so a change in the Knowledge System that breaks the contract shows up without a push here.
+    - cron: "0 7 * * 1"
 
 permissions:
   contents: read

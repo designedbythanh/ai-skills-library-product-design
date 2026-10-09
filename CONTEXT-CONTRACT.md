@@ -79,6 +79,8 @@ Fixed headings, so a skill can read only the part it needs:
 ## Open questions
 ```
 
+`## AI features` is optional, for products without AI features.
+
 ## Markers
 
 - `Not provided`: nobody gave this. Skills ask for it.
@@ -86,8 +88,8 @@ Fixed headings, so a skill can read only the part it needs:
 
 ## How skills find context
 
-1. Read `PRODUCT.md`. If it has `## Sources`, read the sources the task needs from there.
-2. No `PRODUCT.md`: read only what the project points to itself (`CLAUDE.md`, `AGENTS.md`, `README`). Don't search the rest of the repo. Say the context is unconfirmed and offer `product-context`.
+1. Read `PRODUCT.md`. Read the sources the task needs from its `## Sources`; a role with no row uses its default path.
+2. No `PRODUCT.md`: read `briefs/` and only what the project points to itself (`CLAUDE.md`, `AGENTS.md`, `README`). Don't search the rest of the repo. Say the context is unconfirmed and offer `product-context`.
 3. A path in Sources that doesn't exist: say so. Don't look for a replacement.
 4. A source modified after its Verified date: say so and ask whether it still holds.
 5. Start the output with one line: `Context used: [files, with Verified dates, or "unconfirmed"]`.
@@ -109,6 +111,7 @@ Brief against spec: the brief wins on intent, the spec wins on what was committe
 ## What skills write
 
 - A dated entry under the brief's `## Log`: the skill's name and 3-5 lines of what was found or decided, including rejected suggestions.
+- A line under the brief's `## Open` for a disagreement between sources.
 - Nothing else. `PRODUCT.md`, `guidelines`, `decisions` and Sources are written only by `product-context` or by the designer.
 
 ## Versions

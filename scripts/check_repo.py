@@ -126,6 +126,65 @@ for case in sorted(p.name for p in (ROOT / "evals").iterdir() if p.is_dir() and 
     if not (named or in_range):
         err(f"evals/README.md doesn't list {case}")
 
+# The context contract: product-context writes the headings it names, and skills only cite guidelines sections it has.
+def headings(text, block_after):
+    """## headings inside the first ``` block after a line starting with block_after."""
+    m = re.search(rf"^{re.escape(block_after)}.*?\n```\n(.*?)```", text, re.M | re.S)
+    return [h.strip() for h in re.findall(r"^## (.+)$", m.group(1), re.M)] if m else None
+
+
+contract = (ROOT / "CONTEXT-CONTRACT.md").read_text()
+contract_version = (re.search(r"<!-- context-contract (\d+\.\d+) -->", contract) or [None, None])[1]
+if not contract_version:
+    err("CONTEXT-CONTRACT.md: no <!-- context-contract X.Y --> line")
+want = {
+    "PRODUCT.md": headings(contract, "## `PRODUCT.md`"),
+    "brief": headings(contract, "## Brief"),
+    "guidelines.md": headings(contract, "## `guidelines.md`"),
+}
+for label, hs in want.items():
+    if not hs:
+        err(f"CONTEXT-CONTRACT.md: no heading block for {label}")
+optional = {"PRODUCT.md": {"Domain"}, "brief": {"Compositions", "States", "Edge cases", "Flows", "Spec"}, "guidelines.md": {"AI features"}}
+pc = (ROOT / "skills/product-context/SKILL.md").read_text()
+pc_product = re.findall(r"^## (.+)$", pc[pc.index("`PRODUCT.md`\n# "):pc.index("`briefs/[feature-slug].md`\n")], re.M)
+pc_brief = re.findall(r"^## (.+)$", pc[pc.index("`briefs/[feature-slug].md`\n"):], re.M)
+if want["PRODUCT.md"] and pc_product != want["PRODUCT.md"]:
+    err(f"product-context: PRODUCT.md headings {pc_product} don't match the contract {want['PRODUCT.md']}")
+if want["brief"] and pc_brief != want["brief"]:
+    err(f"product-context: brief headings {pc_brief} don't match the contract {want['brief']}")
+for name in skills:
+    m = re.search(r"the `guidelines\.md` sections? ([^.]+?)\.", (ROOT / "skills" / name / "SKILL.md").read_text())
+    for section in re.split(r", | and ", m.group(1)) if m else []:
+        if section not in (want["guidelines.md"] or []):
+            err(f"skills/{name}: cites guidelines section '{section}', which the contract doesn't have")
+
+# The Knowledge System implements this contract (CI, or CHECK_KS=1; KS_PATH=<local clone> to check one before it's pushed).
+if os.environ.get("GITHUB_ACTIONS") or os.environ.get("CHECK_KS"):
+    ks_path = os.environ.get("KS_PATH")
+
+    def ks(path):
+        if ks_path:
+            return (Path(ks_path) / path).read_text()
+        url = f"https://raw.githubusercontent.com/designedbythanh/product-design-knowledge-system/main/{path}"
+        return urllib.request.urlopen(url, timeout=15).read().decode()
+
+    try:
+        if f"Implements context contract {contract_version}" not in ks("README.md"):
+            err(f"Knowledge System README doesn't say 'Implements context contract {contract_version}'")
+        for label, path in [("PRODUCT.md", "PRODUCT.md"), ("brief", "templates/brief.md"), ("guidelines.md", "guidelines.md"),
+                            ("PRODUCT.md", "examples/northbeam/PRODUCT.md"), ("brief", "examples/northbeam/briefs/settings-fields.md"),
+                            ("guidelines.md", "examples/northbeam/guidelines.md")]:
+            found = re.findall(r"^## (.+)$", re.sub(r"```.*?```|<!--.*?-->", "", ks(path), flags=re.S), re.M)
+            required = [h for h in want[label] or [] if h not in optional[label]]
+            if [h for h in found if h in required] != required:
+                err(f"Knowledge System {path}: headings {found} don't include the contract's {required}, in order")
+            extra = [h for h in found if h not in (want[label] or []) and h not in optional[label]]
+            if extra:
+                err(f"Knowledge System {path}: headings not in the contract: {extra}")
+    except OSError as e:
+        err(f"Knowledge System: couldn't read ({e})")
+
 # On GitHub (CI only, needs the network): the repo description and the profile README give the same count.
 if os.environ.get("GITHUB_ACTIONS") or os.environ.get("CHECK_GITHUB"):
     for label, url, key in [

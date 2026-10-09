@@ -1,0 +1,13 @@
+schema_version: "1"
+name: context-08-finds-own-docs
+context:
+  scaffold_script: scaffold.sh
+execution:
+  max_turns: 20
+  timeout_seconds: 600
+  allowed_tools: [Skill, Read, Write, Glob, Grep, Bash]
+  prompt: |
+    Set up the shared context for Northbeam before we start on the next feature.
+
+    Northbeam is a hiring tool for recruiting agencies. Recruiters use it daily on a laptop, between calls. Admins manage settings; recruiters move candidates through the pipeline.
+    Feature: Candidate archive. Goal: let a recruiter clear candidates they're no longer working with, without losing them. Stage: spec only. Open: whether archived candidates count in totals. Worry: recruiters archive by mistake.

@@ -12,6 +12,8 @@ Small test cases for `claude plugin eval`. Each case is a prompt plus a few crit
 | `edge-06` | [`edge-case-finder`](../skills/edge-case-finder/EVAL.md) | A bug from real work: changing scope while a save is running |
 | `persona-01` | [`persona-pretest`](../skills/persona-pretest/EVAL.md) | A miss from real work: concept problems behind a narrow question |
 | `context-01` to `context-05` | [`product-context`](../skills/product-context/EVAL.md) | Writes `PRODUCT.md` and a brief, other skills read them, add to the Log and end with a "Next" line |
+| `context-06` to `context-07` | [`product-context`](../skills/product-context/EVAL.md) | Offers to start a brief when there's none, doesn't repeat earlier findings or raise rejected ones |
+| `context-08` to `context-11` | [`product-context`](../skills/product-context/EVAL.md) | The [context contract](../CONTEXT-CONTRACT.md): finds the project's own docs and asks before using them, what the user says beats the brief, brief beats guidelines and the conflict is written down, a missing source is reported, not replaced |
 
 ## Run them
 
