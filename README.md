@@ -89,6 +89,8 @@ Claude Code plugin:
 /plugin install product-design-skills@designedbythanh
 ```
 
+Restart Claude Code after installing: plugin skills load when a session starts, and until then calling one fails with "Unknown skill". The skills are named `product-design-skills:<skill>`, for example `product-design-skills:edge-case-finder`.
+
 <details>
 <summary><strong>Copy by hand, custom config folder, and duplicate installs</strong></summary>
 

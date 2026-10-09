@@ -4,10 +4,32 @@
 
 | Date | Test | Compared with Claude alone? | Result |
 |---|---|---|---|
+| 9 Oct 2026 | 1 case from real work: values off the design system's scale, run on v1.3.2 and on the next version | Yes, 3 runs each way | Flags all three off-scale values (3 of 3 vs 1 of 3 for the type and the button). The next version's new rule adds nothing measurable here |
 | 27 and 28 Sep 2026 | 5 small made-up cases, run on v1.2.0 then v1.3.0 | Yes, 6 runs each way | Same findings as Claude alone. The difference is how: it asks first (6 of 6 vs 1 of 6) and measures before praising (6 of 6 vs 3 of 6) |
 | 26 Sep 2026 | v1.0.0 vs v1.1.0, scored against a redesign I made on a real product | No | 9 of the 11 problems the redesign fixed (v1.0.0: 8), and it asked my intent first. Still praised two things it shouldn't have |
 
 How the tests are run, and the limits they all share: [`evals/`](../../evals/README.md).
+
+## Values off the design system's scale (critique-06)
+
+**Why.** In real work, the designer kept catching visual problems after the critique: a phone card name in a text size the design system doesn't have, buttons of different sizes on two screens, spacing off the grid. Once the design was an HTML mockup the critique could have rendered, but it judged from the CSS instead. So the next version adds one rule: an HTML mockup counts as built, and looking at it means rendering it at each width and reading the screenshots, not reading the CSS. I also tried a second rule (compare every size and spacing value with the design system's scale), then dropped it after this test.
+
+**How I tested it.** One case, [`critique-06`](../../evals/critique-06-off-scale-values/case.yaml), rewritten from real work as Northbeam. The project folder holds a `DESIGN.md` with a type scale, 4px spacing steps and "buttons 32px at every width", and an HTML mockup of a Candidates list with three values off that scale: a 16/24 card name, a 10px gap between cards, and a 36px button on phone cards. The designer's worry is something else (the filter chips), so the skill has to check the design system on its own. 3 runs with v1.3.2, 3 with the next version, 3 without any skill, on 9 October 2026.
+
+| Flags… | Next version | v1.3.2 | Without |
+|---|---|---|---|
+| the 16/24 card name as off the type scale | 3 of 3 | 3 of 3 | 1 of 3 |
+| the 10px gap as off the 4px steps | 3 of 3 | 3 of 3 | 3 of 3 |
+| the 36px phone button against the 32px rule | 3 of 3 | 3 of 3 | 1 of 3 (the other 2 only said it's too small to tap) |
+| no false alarm on values that are on the scale | 3 of 3 | 3 of 3 | 3 of 3 |
+
+**What this shows.** With a design system file in the project, the skill checks the mockup against it; Claude alone mostly doesn't. v1.3.2 already did this every time, so the "compare with the scale" rule added nothing and I didn't keep it. The rendering rule couldn't be tested: the test sandbox blocked the browser in every run with a skill, and the answers said so. It stays in as untested.
+
+**The grader made mistakes.** It failed 4 of the 6 answers with a skill on at least one criterion. Two were marked as missing a value they had flagged: one listed "Card name is 16/24 · §3: only 12/16, 14/20 and 18/28 are allowed" and was failed on the type finding. Two "false alarms" were right: the case's `DESIGN.md` names `#d1d5db` as the control border, and the chips use `#e5e7eb`. An earlier draft of the case had two more rules the mockup broke by accident (a row height and a chip height), so I removed them before the runs above. The table uses my reading.
+
+**Run it yourself:** `claude plugin eval . --case 'critique-06*' --runs 3 --scaffold --allow-tools Bash Write`
+
+**Limits.** One case and 3 runs per arm. The mockup is small, while the real misses happened on long pages and a long design system file, where a rule is easier to lose.
 
 ## With and without the skill (v1.2.0 and v1.3.0)
 

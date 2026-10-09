@@ -12,7 +12,7 @@ Before analyzing, make sure you have:
 - The two options being compared (ask if not already described)
 - Constraints and goals: users, resources, timeline, success criteria (ask if missing - do not assume)
 
-Context files: if a `PRODUCT.md` or a brief in `briefs/` exists for this work, read them first. Use what they say instead of asking again, ask only for what's missing or out of date, and treat the brief's "Decided" items as decided.
+Context files: if a `PRODUCT.md` or a brief in `briefs/` exists for this work, read them first. Use what they say instead of asking again, ask only for what's missing or out of date, and treat the brief's "Decided" items as decided, including suggestions it records as rejected: never raise those again. Findings from skills that ran earlier (in the brief's Log, or earlier in this conversation) are known: don't repeat them, and mention one only to add something new to it.
 
 Analyze both options using the 5-3-1 framework, reasoning through each section before moving to the next.
 
@@ -26,6 +26,6 @@ Output:
 - Key reason: [1 sentence]
 - Suggested next step: [concrete action]
 
-Handoff: end with one line, "Next: `prd-first-draft` to spec the chosen option. Carry over: the chosen option and the reasoning behind it." If a brief exists and you can write files, add a dated entry under its `## Log`: this skill's name and 3-5 lines of what was found or decided. Show the user the lines you added.
+Handoff: end with one line, "Next: `prd-first-draft` to spec the chosen option. Carry over: the chosen option and the reasoning behind it." If a brief exists and you can write files, add a dated entry under its `## Log`: this skill's name and 3-5 lines of what was found or decided, including suggestions the designer rejected. Show the user the lines you added. If there is no brief, ask once per conversation, after your output: "There's no brief for this feature yet. Want me to start one with `product-context` from what we've covered, so the next skill or session starts from it?"
 
 Exigence: never skip straight to a recommendation without showing the 5 criteria and 3 scenarios - the reasoning is the deliverable, not just the answer.
