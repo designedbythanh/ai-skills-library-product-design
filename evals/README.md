@@ -29,7 +29,7 @@ claude plugin eval . --case 'context-*' --runs 3 --judge-model sonnet --scaffold
 
 ## How I test, and what that can't show
 
-- Each case runs 3 times with the plugin and 3 times without it, with Claude Opus 5.5. Claude Sonnet grades, set with `--judge-model sonnet`. The `critique-06` runs on 9 October 2026 were graded by Claude Haiku, the tool's default, because I left that flag out. I read every failed criterion myself, so the failures don't depend on which model graded; the passes do.
+- Each case runs 3 times with the plugin and 3 times without it, with Claude Opus 5.5. Claude Sonnet grades, set with `--judge-model sonnet`. The runs on 9 October 2026 (`critique-06` and the context contract cases) were graded by Claude Haiku, the tool's default, because I left that flag out. I read every failed criterion myself, so the failures don't depend on which model graded; the passes do.
 - **I read every failed criterion myself.** The grader has been wrong in most rounds, in both directions: failing correct answers, and passing loose ones. Where my reading differs, the EVAL pages say so and use mine.
 - The cases are small and described in text. The skills never had to find things in a real design.
 - One model, 3 runs per arm. The same prompt can give different output on another day.
