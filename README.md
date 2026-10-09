@@ -53,12 +53,14 @@ In my tests, they didn't find things Claude alone missed. On two cases rebuilt f
 Each skill ends with a "Next" line: the skill that usually comes after it, and what to carry over. For example, `edge-case-finder` points to `acceptance-criteria`, carrying its high-priority cases.
 
 In Claude Code, the skills also share two files that `product-context` writes:
-- **`PRODUCT.md`**: the product, its users, roles, references (each with a link), vocabulary, and where known issues are tracked.
-- **`briefs/<feature>.md`**: one per feature, with the goal, the stage, what's decided (with a date and who agreed it), what's open, what worries you, and a **Log**.
+- **`PRODUCT.md`**: the product, its users, roles, vocabulary, and where known issues are tracked. Its **Sources** table points to docs your project already keeps (a `DESIGN.md`, an ADR folder, a tokens file, a spec), so nothing gets copied. `product-context` finds them and asks you to confirm each one before listing it.
+- **`briefs/<feature>.md`**: one per feature, with a link to its spec, the goal, the stage, what's decided (with a date and who agreed it) and what was rejected, what's open, what worries you, and a **Log**.
 
-Every skill reads these first and only asks for what's missing. When a brief exists, each skill adds a short dated entry to its Log, so the next skill, or the next session, starts from what's already been found. In claude.ai, ChatGPT or Gemini, where skills can't keep files, `product-context` prints both files for you to save and paste.
+Every skill is told to read these first, start its answer with a "Context used:" line, and only ask for what's missing (so far tested on `edge-case-finder` and `design-critique-facilitator`). When sources disagree, the more specific one wins (what you say now, then the brief, then the decision log, the guidelines, `PRODUCT.md`), and the skill says so instead of choosing silently, and adds the question under the brief's `## Open` when it can write files. When a brief exists, each skill adds a short dated entry to its Log, so the next skill, or the next session, starts from what's already been found. In claude.ai, ChatGPT or Gemini, where skills can't keep files, `product-context` prints both files for you to save and paste.
 
 Two chains have been run so far: `design-critique-facilitator`, then `edge-case-finder` and `persona-pretest` on a test page ([eval](skills/design-critique-facilitator/EVAL.md)), and `five-whys-root-cause` → `decision-rationale` → `cross-industry-steal` → `persona-pretest` → `design-critique-facilitator` on one question from my real work ([real use](REAL-USE.md#one-question-five-skills-should-two-settings-pages-become-one)). The other "Next" suggestions follow from what each skill produces and needs, not from a test.
+
+The full rules, including which file plays which role, are in the [context contract](CONTEXT-CONTRACT.md). The [Product & Design Knowledge System](https://github.com/designedbythanh/product-design-knowledge-system) is a template that follows it. How it was tested, on six small made-up cases: [eval](skills/product-context/EVAL.md).
 
 ## How each skill is built
 

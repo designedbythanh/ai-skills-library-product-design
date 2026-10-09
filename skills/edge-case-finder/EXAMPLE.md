@@ -2,7 +2,7 @@
 
 > Real output from Claude Code (Claude Opus 5.5), run on 2026-10-01 with v1.3.2 of this skill, in `claude plugin eval`. The output is unedited. The scenario is fictional.
 > The prompt doesn't name the skill: Claude recognized the situation and used it on its own.
-> Since then (v1.4.0), it also doesn't raise again what the brief records as rejected, doesn't repeat what earlier skills found, offers once to start a brief when there's none, and gives one merged list when several review skills run on the same design.
+> Since then (v1.4.0), it also doesn't raise again what the brief records as rejected, doesn't repeat what earlier skills found, offers once to start a brief when there's none, and gives one merged list when several review skills run on the same design. Since v1.5.0, it also starts with a "Context used:" line, reads the docs that the Sources table in `PRODUCT.md` points to, and writes disagreements between sources under the brief's `## Open`.
 
 **What to notice:**
 - The prompt says the spec is about to go to engineering, so it doesn't ask what stage it's looking at. It first looked for a `PRODUCT.md` or brief, found none, and went ahead.

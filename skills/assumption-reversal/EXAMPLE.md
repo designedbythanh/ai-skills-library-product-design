@@ -2,7 +2,7 @@
 
 > Real output from Claude Code (Claude Opus 5.5), run on 2026-09-23 with v1.0.0 of this skill installed. The output is unedited, except for a closing offer to do more work, which was removed. The scenario is fictional.
 > The prompt doesn't name the skill: Claude recognized the situation and used it on its own.
-> Since then (v1.3.0), the skill also reads `PRODUCT.md` and the feature's brief first when they exist, and ends with a "Next" line, so a run today ends differently. Since v1.4.0, it also doesn't raise again what the brief records as rejected, doesn't repeat what earlier skills found, offers once to start a brief when there's none, and gives one merged list when several review skills run on the same design.
+> Since then (v1.3.0), the skill also reads `PRODUCT.md` and the feature's brief first when they exist, and ends with a "Next" line, so a run today ends differently. Since v1.4.0, it also doesn't raise again what the brief records as rejected, doesn't repeat what earlier skills found, offers once to start a brief when there's none, and gives one merged list when several review skills run on the same design. Since v1.5.0, it also starts with a "Context used:" line, reads the docs that the Sources table in `PRODUCT.md` points to, and writes disagreements between sources under the brief's `## Open`.
 
 ## Prompt
 
