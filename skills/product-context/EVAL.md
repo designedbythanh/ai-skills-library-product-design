@@ -47,7 +47,7 @@ The "with the contract" runs were made on the version just before one last fix: 
 - Git doesn't run in the eval sandbox, so the check for a source changed after its Verified date wasn't tested. Two runs said so.
 - The version before the contract wasn't run on `context-06` and `context-07`.
 - One path is untested: a skill reusing what was said earlier in the same conversation when there's no brief.
-- With no `PRODUCT.md`, skills start with "Context used: none", but in the smoke runs none of them said the context was unconfirmed or offered `product-context` at that point, as the contract asks. Not fixed yet.
+- With no `PRODUCT.md`, the smoke runs started with "Context used: none" instead of saying the context was unconfirmed, and offered `product-context` only for a brief, not for `PRODUCT.md`. I fixed both and ran `context-06` again (3 runs) and `edge-01` and `critique-04` (1 run each), with the plugin only: all 5 started with "Context used (unconfirmed):" and asked once, at the end, whether to set up both files; `context-06` still passed 3 of 3.
 
 ## The first test
 
