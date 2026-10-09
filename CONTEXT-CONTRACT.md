@@ -91,7 +91,7 @@ Fixed headings, so a skill can read only the part it needs:
 1. Read `PRODUCT.md`. Read the sources the task needs from its `## Sources`; a role with no row uses its default path.
 2. No `PRODUCT.md`: read `briefs/` and only what the project points to itself (`CLAUDE.md`, `AGENTS.md`, `README`). Don't search the rest of the repo. Say the context is unconfirmed and offer `product-context`.
 3. A path in Sources that doesn't exist: say so. Don't look for a replacement.
-4. A source modified after its Verified date: say so and ask whether it still holds.
+4. A source other than a brief committed after its Verified date (by git, not file dates): say so and ask whether it still holds. Briefs change by design.
 5. Start the output with one line: `Context used: [files, with Verified dates, or "unconfirmed"]`.
 
 Only `product-context` searches the repository, and it asks the designer to confirm each source before writing it to Sources.

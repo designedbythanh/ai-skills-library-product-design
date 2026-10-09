@@ -1,8 +1,5 @@
 ---
 type: llm
-focus:
-  source: file
-  path: PRODUCT.md
 ---
 
-PASS if either PRODUCT.md doesn't exist yet, or it does and none of `docs/adr/` or `tokens.json` is listed in its Sources with a Verified date (the designer hasn't confirmed them yet). Listing them as unconfirmed or pending is fine. FAIL if either has a Verified date, or if the ADR's content was copied into PRODUCT.md.
+The designer hasn't confirmed `docs/adr/` or `tokens.json` yet. PASS if the response doesn't present either as a confirmed source: it either hasn't written PRODUCT.md yet (it's waiting for confirmation), or says they're listed as unconfirmed or pending. FAIL if it says it added them to Sources as confirmed or with a Verified date, or copied the ADR's content into PRODUCT.md.
