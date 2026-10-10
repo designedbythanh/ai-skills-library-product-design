@@ -1,5 +1,30 @@
 # Changelog
 
+## 1.5.0 · 2026-10-10
+
+### Context contract
+- New [`CONTEXT-CONTRACT.md`](CONTEXT-CONTRACT.md) (contract 1.0): what the skills read and write, by role (product, guidelines, decisions, feature, evidence, issues) rather than by file name, so a team keeps its context where it already lives. The [Product & Design Knowledge System](https://github.com/designedbythanh/product-design-knowledge-system) v2 implements it.
+
+### product-context
+- Looks for docs the project already keeps (a `DESIGN.md`, an ADR folder, a tokens file, specs), starting where the project points to itself, and asks you to confirm each one. Only confirmed docs go into a new `## Sources` table in `PRODUCT.md`, which replaces `## References`; an older `PRODUCT.md` is moved over after asking.
+- The brief links its spec on a `Spec:` line instead of copying it. Answers you're unsure of are kept and marked "⚠️ Not validated".
+
+### All other skills
+- Read `PRODUCT.md` and the sources it lists; without it, only `briefs/` and what the project points to itself, never a search of the whole repo.
+- Start with a "Context used:" line naming what they read, with each source's Verified date, or "Context used (unconfirmed):" when there's no `PRODUCT.md`. With no `PRODUCT.md`, the offer at the end is to set up both files with `product-context`.
+- A path in Sources that doesn't exist is reported, not replaced with another file. A source that git shows changed after its Verified date is flagged (untested: git doesn't run in the eval sandbox).
+- When sources disagree, the more specific one wins (what you say now, the brief, the decision log, the guidelines, `PRODUCT.md`), and the skill says so and, when it can write files, adds the question under the brief's `## Open`.
+
+### Evals
+- 6 new cases, `context-06` to `context-11`, run 3 times with the plugin and 3 without; `context-08` to `context-11` also on v1.4.0. With the contract, `product-context` asks before using the docs it finds (3 of 3; 0 of 3 on v1.4.0 and without), and disagreements go under `## Open` (3 of 3). v1.4.0 already went with what the user says over the brief. Details in the [product-context eval](skills/product-context/EVAL.md). These runs were graded by Claude Haiku, because `--judge-model sonnet` was left out.
+
+### Docs
+- README: how the skills share context now. Examples' "Since then" lines say what changed in v1.5.0.
+
+### Repo
+- `scripts/check_repo.py` checks that `product-context` writes the headings the contract names, and in CI that the Knowledge System implements the current contract. CI also runs weekly, so a change there shows up without a push here.
+
+
 ## 1.4.0 · 2026-10-10
 
 From real work between 2 and 9 October 2026.
