@@ -1,6 +1,6 @@
 # Evals
 
-Small test cases for `claude plugin eval`. Each case is a prompt plus a few criteria, written in plain words, that Claude Sonnet grades the answer against. Results for each skill are in its EVAL.md.
+Small test cases for `claude plugin eval`. Each case is a prompt plus a few criteria, written in plain words, that Claude grades the answer against. Results for each skill are in its EVAL.md.
 
 ## The cases
 
@@ -18,16 +18,16 @@ Small test cases for `claude plugin eval`. Each case is a prompt plus a few crit
 From the repo root:
 
 ```bash
-claude plugin eval . --case 'edge-*' --runs 3
-claude plugin eval . --case 'critique-*' --runs 3 --scaffold --allow-tools Bash Write
-claude plugin eval . --case 'context-*' --runs 3 --scaffold --allow-tools Bash Write Edit
+claude plugin eval . --case 'edge-*' --runs 3 --judge-model sonnet
+claude plugin eval . --case 'critique-*' --runs 3 --judge-model sonnet --scaffold --allow-tools Bash Write
+claude plugin eval . --case 'context-*' --runs 3 --judge-model sonnet --scaffold --allow-tools Bash Write Edit
 ```
 
 `--case` takes one pattern per command. By default each case also runs without the plugin, so you see the difference. In my runs, one answer cost about $0.05 to $0.40 with Claude Opus 5.5, and more when a case has many criteria to grade. Results go to `evals/results/`, which isn't committed.
 
 ## How I test, and what that can't show
 
-- Each case runs 3 times with the plugin and 3 times without it, with Claude Opus 5.5. Claude Sonnet grades.
+- Each case runs 3 times with the plugin and 3 times without it, with Claude Opus 5.5. Claude Sonnet grades, set with `--judge-model sonnet`. The `critique-06` runs on 9 October 2026 were graded by Claude Haiku, the tool's default, because I left that flag out. I read every failed criterion myself, so the failures don't depend on which model graded; the passes do.
 - **I read every failed criterion myself.** The grader has been wrong in most rounds, in both directions: failing correct answers, and passing loose ones. Where my reading differs, the EVAL pages say so and use mine.
 - The cases are small and described in text. The skills never had to find things in a real design.
 - One model, 3 runs per arm. The same prompt can give different output on another day.

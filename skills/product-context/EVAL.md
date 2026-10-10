@@ -4,9 +4,14 @@
 
 | Date | Test | Compared with Claude alone? | Result |
 |---|---|---|---|
+| 10 Oct 2026 | The same 5 cases, re-run on v1.4.0 | Yes, 3 runs each way | No regression: every criterion 3 of 3 with the plugin |
 | 28 Sep 2026 | 5 small made-up cases for the shared files, the Log and the "Next" line | Yes, 3 runs each way | Files, Log and "Next" line written every time with the plugin, never without. A critique with a brief ties Claude alone: the brief saves a round of questions, not quality |
 
 How the tests are run, and the limits they all share: [`evals/`](../../evals/README.md).
+
+## Re-run on v1.4.0
+
+v1.4.0 changes every skill's context paragraph (rejected suggestions, earlier findings, offering a brief), so I re-ran the five cases below on 10 October 2026, 3 runs with the plugin and 3 without, graded by Claude Sonnet. With the plugin, every criterion passed in every run. Without it, the results matched the first test, except that the critique kept the decided sort order in only 1 of 3 runs this time (3 of 3 on 28 September): the other two suggested changing the "newest first" default. In `context-05`, one run without the plugin hit a usage limit and its replacement timed out, so that arm has 2 runs (the replacement pair added a fourth run with the plugin, which also passed).
 
 ## The test
 
@@ -35,7 +40,7 @@ The critique row is a tie, and it's worth being clear about why. Given a request
 - **Put a date and a name on each decision.** That's what lets a critique tell a current decision from an old spec.
 - **The Log only works in Claude Code**, where skills can write files. In claude.ai, ChatGPT or Gemini, the skill prints both files for you to save and paste.
 
-**Run it yourself:** `claude plugin eval . --case 'context-*' --runs 3 --scaffold --allow-tools Bash Write Edit`
+**Run it yourself:** `claude plugin eval . --case 'context-*' --runs 3 --judge-model sonnet --scaffold --allow-tools Bash Write Edit`
 
 ## Limits
 

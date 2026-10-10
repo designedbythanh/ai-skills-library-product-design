@@ -1,5 +1,37 @@
 # Changelog
 
+## 1.4.0 · 2026-10-10
+
+From real work between 2 and 9 October 2026.
+
+### All skills except `product-context`
+- A suggestion the brief records as rejected is never raised again.
+- Findings from skills that ran earlier (in the brief's Log, or earlier in the conversation) aren't repeated; one is mentioned only to add something new to it.
+- When there's no brief, the skill offers once per conversation to start one with `product-context`.
+- Log entries also record the suggestions the designer rejected.
+
+### Review skills
+- `design-critique-facilitator`, `edge-case-finder`, `persona-pretest` and `assumption-reversal`: when several review the same design in one go, they end with one merged list, one line per problem, naming every skill that found it.
+- `design-critique-facilitator`: an HTML mockup counts as built. Looking at it means rendering it at each width and reading the screenshots, not reading the CSS. Untested: the eval sandbox blocked the browser in every run.
+
+### `product-context`
+- The brief has `Rejected:` lines under Decided.
+- What the designer already said earlier in the conversation counts as an answer.
+- Asks before adding the files to a commit in a shared repo.
+
+### Evals
+- New case [`critique-06-off-scale-values`](evals/critique-06-off-scale-values/case.yaml), rewritten from real work as Northbeam: an HTML mockup with three values off its `DESIGN.md` scale. Result (3 runs with v1.3.2, 3 with a v1.4.0 draft, 3 without): flags all three off-scale values (3 of 3 vs 1 of 3 for the type and the button). The draft's scale rule added nothing measurable, so it was dropped. Details in the [critique eval](skills/design-critique-facilitator/EVAL.md).
+- These runs were graded by Claude Haiku, the tool's default, because `--judge-model sonnet` was left out. Every "Run it yourself" command now sets it.
+- `context-01` to `context-05` re-run on v1.4.0, graded by Claude Sonnet: no regression, every criterion 3 of 3 with the plugin. Details in the [product-context eval](skills/product-context/EVAL.md).
+
+### Docs
+- README: restart Claude Code after installing the plugin, or calling a skill fails with "Unknown skill".
+- Each example's "Since then" line says what changed in v1.4.0.
+
+### Repo
+- `CLAUDE.md`: rules for editing this repo, a checklist for what a script can't judge, and release steps.
+- `scripts/check_repo.py`: seven checks, each from a mistake that once reached the repo (skill counts in prose, example version headers, eval pages starting with At a glance, changelog entry for the current version, README results matching an eval row, every eval case listed, and in CI the GitHub description and profile count). Each was tested by reintroducing the original mistake in a copy: 9 of 9 caught.
+
 ## 1.3.2 · 2026-10-01
 
 ### Skills

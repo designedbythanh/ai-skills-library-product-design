@@ -45,7 +45,7 @@ How the tests are run, and the limits they all share: [`evals/`](../../evals/REA
 
 In a separate case (see the [product-context eval](../product-context/EVAL.md)), the skill read the build stage from a brief instead of asking, and added its findings to the brief's Log.
 
-**Run it yourself:** `claude plugin eval . --case 'edge-*' --runs 3`
+**Run it yourself:** `claude plugin eval . --case 'edge-*' --runs 3 --judge-model sonnet`
 
 ## First test: one scored run on a real redesign (v1.1.0)
 

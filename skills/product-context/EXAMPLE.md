@@ -1,6 +1,6 @@
 # Example: product-context
 
-> Real output from Claude Code (Claude Opus 5.5), run on 2026-09-28 with `claude -p` and v1.3.0 of this plugin loaded. Since then, only the version line was added to the skill. The output and both files are unedited. The scenario is fictional.
+> Real output from Claude Code (Claude Opus 5.5), run on 2026-09-28 with `claude -p` and v1.3.0 of this plugin loaded. Since then (v1.4.0), the brief also has `Rejected:` lines under Decided, the skill reuses what you already said earlier in the conversation, and it asks before adding the files to a shared repo's commit. The output and both files are unedited. The scenario is fictional.
 > The prompt doesn't name the skill: Claude recognized the situation and used it on its own.
 
 **What to notice:**
