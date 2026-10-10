@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.6.0 · 2026-10-10
+
+From real work: a rule tied to a past incident was scored like any other criterion ([real use](REAL-USE.md#decision-rationale)).
+
+### decision-rationale
+- Takes 2 to 4 options instead of exactly two. With more, it asks you to shortlist. If keeping things as they are is a real choice and isn't listed, it suggests adding it.
+- Before scoring, lists must-meet conditions (safety, a rule from the decision log or guidelines, a rule set after a past incident, a hard constraint). An option that fails one is ruled out, with what it would need to change to pass, and isn't scored.
+- The output also names a runner-up and what would make it win, and lists what was ruled out.
+
+### Evals
+- 2 new cases, `decision-01` and `decision-02`, run 3 times with the plugin and 3 without, and 3 times on v1.5.0, graded by Claude Sonnet. With a team rule set after an incident, v1.6.0 rules the option out before scoring in 3 of 3 runs; v1.5.0 scored the rule in 3 of 3. Claude alone also treated the rule as decisive (3 of 3), but gave no confidence level. Four options: no difference, v1.5.0 already compared them all. Details in the [decision-rationale eval](skills/decision-rationale/EVAL.md).
+
+
 ## 1.5.0 · 2026-10-10
 
 ### Context contract

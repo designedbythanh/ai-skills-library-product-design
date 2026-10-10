@@ -11,6 +11,7 @@ Small test cases for `claude plugin eval`. Each case is a prompt plus a few crit
 | `edge-01` to `edge-05` | [`edge-case-finder`](../skills/edge-case-finder/EVAL.md) | Asks or states the build stage, ranks prototype shortcuts against it, covers all five kinds of failure, stays out of a translation |
 | `edge-06` | [`edge-case-finder`](../skills/edge-case-finder/EVAL.md) | A bug from real work: changing scope while a save is running |
 | `persona-01` | [`persona-pretest`](../skills/persona-pretest/EVAL.md) | A miss from real work: concept problems behind a narrow question |
+| `decision-01` to `decision-02` | [`decision-rationale`](../skills/decision-rationale/EVAL.md) | Compares all of 4 options and names a runner-up; a team rule set after an incident rules an option out instead of being one score among others |
 | `context-01` to `context-05` | [`product-context`](../skills/product-context/EVAL.md) | Writes `PRODUCT.md` and a brief, other skills read them, add to the Log and end with a "Next" line |
 | `context-06` to `context-07` | [`product-context`](../skills/product-context/EVAL.md) | Offers to start a brief when there's none, doesn't repeat earlier findings or raise rejected ones |
 | `context-08` to `context-11` | [`product-context`](../skills/product-context/EVAL.md) | The [context contract](../CONTEXT-CONTRACT.md): finds the project's own docs and asks before using them, what the user says beats the brief, brief beats guidelines and the conflict is written down, a missing source is reported, not replaced |
@@ -22,6 +23,7 @@ From the repo root:
 ```bash
 claude plugin eval . --case 'edge-*' --runs 3 --judge-model sonnet
 claude plugin eval . --case 'critique-*' --runs 3 --judge-model sonnet --scaffold --allow-tools Bash Write
+claude plugin eval . --case 'decision-*' --runs 3 --judge-model sonnet
 claude plugin eval . --case 'context-*' --runs 3 --judge-model sonnet --scaffold --allow-tools Bash Write Edit
 ```
 
