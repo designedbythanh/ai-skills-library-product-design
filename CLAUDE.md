@@ -4,7 +4,7 @@ Instructions for Claude (or anyone) editing this skills library. Each rule here 
 
 ## Before saying anything is done
 
-1. Run `python3 scripts/check_repo.py`. It covers what a script can check: skill counts, version markers, example headers, changelog entry, README numbers against the eval pages, the eval case list, links. CI runs it too, plus the GitHub description and profile README count.
+1. Run `python3 scripts/check_repo.py`. It covers what a script can check: skill counts, version markers, example headers, changelog entry, README numbers against the eval pages, the eval case list, links, each skill's "Context files:" paragraph against `scripts/context-files.txt`. CI runs it too, plus the GitHub description and profile README count.
 2. Go through the checklist below for everything the script can't judge.
 3. Say what you did not check.
 
@@ -43,7 +43,7 @@ Run it over the whole repo, not only the files you touched.
 
 [`CONTEXT-CONTRACT.md`](CONTEXT-CONTRACT.md) is what every skill reads and `product-context` writes. The [Knowledge System](https://github.com/designedbythanh/product-design-knowledge-system) implements it.
 
-- Changing a role, heading, marker or rule there is a contract change: bump `<!-- context-contract X.Y -->`, update `product-context` and the shared "Context files" paragraph in the other skills, and update the Knowledge System (templates, Northbeam example, the "Implements context contract" line) before merging here. CI checks the Knowledge System's `main` and fails until it matches.
+- Changing a role, heading, marker or rule there is a contract change: bump `<!-- context-contract X.Y -->`, update `product-context`, edit the shared paragraph in `scripts/context-files.txt` and run `python3 scripts/context_files.py` to write it into every other skill (a new skill needs a line in its `SECTIONS`), and update the Knowledge System (templates, Northbeam example, the "Implements context contract" line) before merging here. CI checks the Knowledge System's `main` and fails until it matches.
 - To check a local Knowledge System clone before pushing it: `CHECK_KS=1 KS_PATH=../product-design-knowledge-system python3 scripts/check_repo.py`.
 
 ## Evals

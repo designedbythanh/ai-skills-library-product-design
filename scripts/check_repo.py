@@ -159,6 +159,15 @@ for name in skills:
         if section not in (want["guidelines.md"] or []):
             err(f"skills/{name}: cites guidelines section '{section}', which the contract doesn't have")
 
+# Every skill but product-context carries the "Context files:" paragraph written from scripts/context-files.txt,
+# so a contract change can't miss a copy.
+sys.dont_write_bytecode = True
+sys.path.insert(0, str(ROOT / "scripts"))
+from context_files import problems as context_problems  # noqa: E402
+
+for problem in context_problems():
+    err(problem)
+
 # The Knowledge System implements this contract (CI, or CHECK_KS=1; KS_PATH=<local clone> to check one before it's pushed).
 if os.environ.get("GITHUB_ACTIONS") or os.environ.get("CHECK_KS"):
     ks_path = os.environ.get("KS_PATH")
