@@ -1,6 +1,6 @@
 # AI Skills Library for Product & Design Teams
 
-16 AI skills for product designers and product managers, from understanding a problem to reading the results after launch. Each skill is a short set of instructions your AI tool follows for one job: critiquing a design, finding edge cases, writing acceptance criteria. They ask for the context they need instead of guessing, and each one comes with a real run you can read before trying it.
+17 AI skills for product designers and product managers, from understanding a problem to reading the results after launch. Each skill is a short set of instructions your AI tool follows for one job: critiquing a design, finding edge cases, writing acceptance criteria. They ask for the context they need instead of guessing, and each one comes with a real run you can read before trying it.
 
 by [Thanh Nguyen](https://www.linkedin.com/in/thanh2-nguyen/) · Product Designer, AI-native workflows · [Substack](https://designedbythanh.substack.com) · [Notion templates](https://www.notion.com/@thanh-nguyen)
 
@@ -12,7 +12,7 @@ You describe a design and ask for feedback. In Claude you don't have to name the
 
 Every skill has an example like this next to it, run in Claude Code on a fictional case.
 
-## The 16 skills, in the order you'd use them
+## The 17 skills, in the order you'd use them
 
 | Stage | Skill | What it does | |
 |---|---|---|---|
@@ -28,6 +28,7 @@ Every skill has an example like this next to it, run in Claude Code on a fiction
 | | [`edge-case-finder`](skills/edge-case-finder/SKILL.md) | Lists what breaks: bad input, permissions, two people at once, outages, and how users actually behave | [Example](skills/edge-case-finder/EXAMPLE.md) · [Eval](skills/edge-case-finder/EVAL.md) |
 | | [`acceptance-criteria`](skills/acceptance-criteria/SKILL.md) | Turns a user story into Given/When/Then criteria, including errors and edge cases | [Example](skills/acceptance-criteria/EXAMPLE.md) |
 | **Get feedback** | [`design-critique-facilitator`](skills/design-critique-facilitator/SKILL.md) | Critiques a design against your intent, with each fix tagged by severity and owner | [Example](skills/design-critique-facilitator/EXAMPLE.md) · [Eval](skills/design-critique-facilitator/EVAL.md) · [Real use](REAL-USE.md#design-critique-facilitator) |
+| | [`findings-challenger`](skills/findings-challenger/SKILL.md) | Audits a review in a fresh context: rejects findings that don't hold, corrects wrong fixes, adds what was missed, each verdict backed by a check | [Example](skills/findings-challenger/EXAMPLE.md) · [Eval](skills/findings-challenger/EVAL.md) |
 | | [`explain-to-4-audiences`](skills/explain-to-4-audiences/SKILL.md) | Explains one decision to a 10-year-old, an engineer, an executive and a user, to test whether it's clear | [Example](skills/explain-to-4-audiences/EXAMPLE.md) |
 | **Under deadline pressure** | [`design-scope-negotiator`](skills/design-scope-negotiator/SKILL.md) | Sorts scope into ship, fast-follow and cut, with the reason for each | [Example](skills/design-scope-negotiator/EXAMPLE.md) |
 | **After it ships** | [`experiment-design`](skills/experiment-design/SKILL.md) | Plans an A/B test with a decision rule, and says when traffic is too low to trust the result | [Example](skills/experiment-design/EXAMPLE.md) |
@@ -77,7 +78,7 @@ Each skill is one `SKILL.md` file with six parts:
 | Tool | How |
 |---|---|
 | **Claude** (claude.ai / Desktop) | Download a skill's `.zip` from the [latest release](https://github.com/designedbythanh/ai-skills-library-product-design/releases/latest) (no GitHub account needed) and upload it in Settings → Capabilities (or Skills). Or create a new skill there and paste the name, description and instructions by hand. Claude can pick it up on its own when it fits. |
-| **Claude Code** | Install all 16 as a plugin (below), or copy skill folders by hand. |
+| **Claude Code** | Install all 17 as a plugin (below), or copy skill folders by hand. |
 | **ChatGPT** | Paste a skill's instructions into a Custom GPT (Explore GPTs → Create) or a Project's instructions. You open that GPT or Project yourself when you need it. |
 | **Gemini** | Paste a skill's instructions into a Gem (Gems → New Gem), then open that Gem when you need it. |
 | **Any other tool** | Paste the instructions into a new chat, followed by your details. |

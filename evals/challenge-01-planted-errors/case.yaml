@@ -1,0 +1,15 @@
+schema_version: "1"
+name: challenge-01-planted-errors
+context:
+  scaffold_script: scaffold.sh
+execution:
+  max_turns: 25
+  timeout_seconds: 900
+  allowed_tools: [Skill, Read, Glob, Grep, Bash, Agent]
+  prompt: |
+    A critique of the Pipeline columns page in Northbeam, a recruiting agency's hiring tool, came back with the four findings below. The mockup is `mockup/pipeline-columns.html` and the brief is `briefs/pipeline-columns.md`. Before I hand these to engineering, I want to know which ones actually hold up, and whether the review missed anything.
+
+    1. The hint text under the page title (#6b7280 on white) fails WCAG AA, at about 3.9:1. Fix: darken it to #374151. Severity: major.
+    2. Fee models open in a separate drawer, so recruiters lose sight of the fields table. Fix: show fee models as a flagged row of the fields table. Severity: major.
+    3. A switch saves the moment it's flipped, so a mis-click changes what every client sees, with no way back. Fix: add a confirmation dialog before each switch change. Severity: blocker.
+    4. The ↺ button on overridden cells has no label or tooltip, so recruiters won't know it resets the cell to the agency value. Fix: add the tooltip "Reset to agency value" and the same aria-label. Severity: minor.

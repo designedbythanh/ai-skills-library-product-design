@@ -20,6 +20,7 @@ body:
         - edge-case-finder
         - acceptance-criteria
         - design-critique-facilitator
+        - findings-challenger
         - explain-to-4-audiences
         - design-scope-negotiator
         - experiment-design
